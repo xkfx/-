@@ -1,13 +1,13 @@
-package chatroom.entity;
+package chatroom.ui.entity;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class menuBox extends JPanel {
+public class MenuBox extends JPanel {
     private JButton buttonTest = new JButton("☺");
     private JButton buttonTest2 = new JButton("☺");
 
-    public menuBox() {
+    public MenuBox() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         add(buttonTest);
         add(buttonTest2);

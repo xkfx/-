@@ -1,4 +1,4 @@
-package chatroom.entity;
+package chatroom.ui.entity;
 
 import javax.swing.*;
 

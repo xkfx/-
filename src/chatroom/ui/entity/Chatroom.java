@@ -1,13 +1,15 @@
-package chatroom.entity;
+package chatroom.ui.entity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * 用于放置各种组件的聊天室主界面。
  * 中间放聊天窗，右边放用户列表，上面是登陆注册、个人中心状态栏，下面是补充信息栏。
  */
-public class Chatroom extends JFrame {
+public class Chatroom extends JFrame implements ActionListener {
     private JPanel menuBox;
     private JTextArea chatBox;
     private JPanel messageBox;
@@ -17,7 +19,7 @@ public class Chatroom extends JFrame {
      * 构造器
      */
     public Chatroom() {
-        menuBox = new menuBox();
+        menuBox = new MenuBox();
         chatBox = new JTextArea(13, 92);
         JScrollPane scrollChatBox = new JScrollPane(chatBox);
 
@@ -42,7 +44,13 @@ public class Chatroom extends JFrame {
 
         add(menuBox, BorderLayout.NORTH);
         add(mainPanel, BorderLayout.CENTER);
+
+
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println(e);
+    }
 }
