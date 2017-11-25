@@ -1,13 +1,19 @@
 package chatroom.ui.entity;
 
+import chatroom.client.entity.Client;
 import chatroom.ui.enums.ButtonEnum;
+import chatroom.ui.exception.UserInputException;
+import chatroom.ui.service.ComponentManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class MessageBox extends JPanel implements ActionListener {
+public class MessageBox extends JPanel implements ActionListener, KeyListener {
+
     private JButton buttonTest = new JButton("☺");
     private JButton buttonTest2 = new JButton("☺");
     private JButton buttonTest3 = new JButton("消息记录");
@@ -15,7 +21,10 @@ public class MessageBox extends JPanel implements ActionListener {
     private JButton buttonSend = new JButton(ButtonEnum.SEND.getExpression());
     private JButton buttonClose = new JButton(ButtonEnum.CLOESE.getExpression());
 
-    MessageBox() {
+    private Client client;
+    private ComponentManager componentManager;
+
+    public MessageBox() {
         buttonSend.setFocusPainted(false);
         buttonClose.setFocusPainted(false);
         JScrollPane jScrollPane = new JScrollPane(inputArea);
@@ -45,15 +54,61 @@ public class MessageBox extends JPanel implements ActionListener {
         add(panButton, BorderLayout.SOUTH);
 
         buttonSend.addActionListener(this);
+        inputArea.addKeyListener(this);
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setComponentManager(ComponentManager componentManager) {
+        this.componentManager = componentManager;
+    }
+
+    /**
+     * 对用户的输入格式进行检查，用户输入未必总来自输入面板！
+     * @return
+     * @throws UserInputException
+     */
+    private String getInput() throws UserInputException {
+        String input = inputArea.getText();
+        if (input != null && !input.trim().equals("")) {
+            inputArea.setText("");
+            return input;
+        } else {
+            throw new UserInputException("用户没有输入");
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(ButtonEnum.SEND.getExpression())) {
-            System.out.println("用户点击了发送。");
-            // 从发送缓存区 获取 检查 消息
-            // client.send(Message)
-            //
+            try {
+                String input = getInput();
+                componentManager.getClient().sendPublicMessage(input);
+            } catch (UserInputException exception) {
+                componentManager.getChatBox().append("您还没有输入哦！\n");
+            } catch (Exception exception) {
+                // 捕获发送中抛出的异常反馈给用户
+                componentManager.getChatBox().append(exception.getMessage());
+            }
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+       // System.out.println(e.getKeyChar() + e.getModifiers());
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    public static void main(String[] args) {
+        MessageBox messageBox = new MessageBox();
     }
 }

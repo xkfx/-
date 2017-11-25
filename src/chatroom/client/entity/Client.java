@@ -1,42 +1,29 @@
 package chatroom.client.entity;
 
-import chatroom.entity.Message;
-
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
+import java.net.UnknownHostException;
 
-import static chatroom.entity.Iconst.PUBLIC_MESSAGE;
+/**
+ * 客户端接口，供 GUI 调用的顶层接口。
+ */
+public interface Client {
+    /**
+     * 与相应服务器建立连接
+     * @param host
+     * @param port
+     */
+    void establishConnection(String host, int port)
+            throws UnknownHostException, IOException;
 
-public class Client {
-    public static void main(String[] args) throws IOException {
-        for (int i = 0; i != 100; ++i) {
-            Socket socket = null;
-            ObjectOutputStream os = null;
-            try {
-                socket = new Socket("localhost", 10000);
-                // 发消息
-                os = new ObjectOutputStream(socket.getOutputStream());
-                Message message = new Message(PUBLIC_MESSAGE, "message number " + i);
-                os.writeObject(message);
-                os.flush();
+    /**
+     * 负责接收，解析来自服务器的对象，并调用相应的服务，client 应该持有 GUI 的引用
+     */
+    void doResponse() throws IOException, ClassNotFoundException;
 
-            } finally {
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void sendMessage() {
-
-    }
+    /**
+     * 群发消息
+     * @param text
+     */
+    void sendPublicMessage(String text)
+            throws IOException;
 }
