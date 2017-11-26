@@ -1,12 +1,13 @@
 package chatroom.ui.entity;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
 
 public class BulletinBoard extends JPanel {
-    private JTextArea announcement = new JTextArea(23, 23);
+    private JTextArea announcement = new JTextArea(15, 23);
 
     public BulletinBoard() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(announcement);
     }
 }

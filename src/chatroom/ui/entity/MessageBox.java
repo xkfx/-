@@ -6,6 +6,9 @@ import chatroom.ui.exception.UserInputException;
 import chatroom.ui.service.ComponentManager;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

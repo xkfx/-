@@ -26,4 +26,14 @@ public interface Client {
      */
     void sendPublicMessage(String text)
             throws IOException;
+
+    /**
+     * 断开连接
+     */
+    void shutdown() throws IOException;
+
+    /**
+     * 发出离线请求
+     */
+    void sendOfflineRequest();
 }

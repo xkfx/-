@@ -1,4 +1,4 @@
-package chatroom.server.entity;
+package chatroom.server.entity.impl;
 
 import chatroom.entity.Message;
 import chatroom.server.service.MessageService;
@@ -14,36 +14,55 @@ import java.net.Socket;
 import static chatroom.entity.Iconst.PUBLIC_MESSAGE;
 
 public class MyServer {
-    public static void main(String[] args) throws IOException {
-        ServerSocket server = new ServerSocket(10000);
-        System.out.println("服务器正在监听 10000 端口 ...");
-        MessageService messageService = new MessageServiceImpl();
-        while (true) {
-            Socket socket = server.accept();
-            messageService.addAcceptor(socket);
-            invoke(socket, messageService);
+    private int count = 0;
+    private MessageService messageService = new MessageServiceImpl();
+
+    public static void main(String[] args) {
+        MyServer myServer = new MyServer();
+        myServer.startup();
+    }
+
+    public void startup() {
+        ServerSocket server = null;
+        try {
+            server = new ServerSocket(10000);
+            System.out.println("服务器正在监听 10000 端口 ...");
+            while (true) {
+                Socket socket = server.accept();
+                serve(socket);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private static void invoke(final Socket socket, MessageService messageService) {
+    private void serve(final Socket socket) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 ObjectInputStream is = null;
+                int id = count++;
                 try {
+                    messageService.addAcceptor(id, socket);
                     is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
 
                     // 等待客户端的请求
-                    while (true) {
+                    while (true && !socket.isClosed()) {
                         Object object = is.readObject();
                         Message message = (Message) object;
                         if (message.getType() == PUBLIC_MESSAGE) {
                             messageService.publicMessage(message);
                         }
+                        // TO-DO 客户端主动下线，锁操作。
                     }
 
                 } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
+                    messageService.deleteAcceptorById(id);
+                    try {
+                        messageService.publicMessage(new Message(PUBLIC_MESSAGE, "xx用户异常下线.\n"));
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 } finally {
                     try {
                         if (is != null) {

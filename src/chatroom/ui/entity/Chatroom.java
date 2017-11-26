@@ -30,7 +30,7 @@ public class Chatroom extends JFrame {
         chatBox.setEditable(false);
         JScrollPane scrollChatBox = new JScrollPane(chatBox);
         messageBox = new MessageBox();
-        rightBord = new BulletinBoard();
+        rightBord = new RightBoard();
 
         setTitle("chatroom v1.0");
         setSize(1360, 828);
@@ -66,12 +66,17 @@ public class Chatroom extends JFrame {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while(true) {
-                        try {
+                    try {
+                        while(true) {
                             client.doResponse();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            // 没正常关掉咋办？
+                            client.shutdown();
                         } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
                             e.printStackTrace();
                         }
                     }

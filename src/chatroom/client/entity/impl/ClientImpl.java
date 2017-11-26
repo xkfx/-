@@ -33,7 +33,7 @@ public class ClientImpl implements Client {
 
     @Override
     public void doResponse() throws IOException, ClassNotFoundException {
-        if (socket != null) {
+        if (socket != null && !socket.isClosed()) {
             // 接收消息
             Object object = is.readObject();
             Message message = (Message) object;
@@ -52,5 +52,17 @@ public class ClientImpl implements Client {
             os.writeObject(message);
             os.flush();
         }
+    }
+
+    @Override
+    public void shutdown() throws IOException {
+        os.close();
+        is.close();
+        socket.close();
+    }
+
+    @Override
+    public void sendOfflineRequest() {
+
     }
 }
