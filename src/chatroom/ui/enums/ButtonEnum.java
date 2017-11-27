@@ -11,7 +11,7 @@ public enum ButtonEnum {
     private int id;
     private String expression;
 
-    private ButtonEnum(int id, String expression) {
+    ButtonEnum(int id, String expression) {
         this.id = id;
         this.expression = expression;
     }

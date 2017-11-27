@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import static chatroom.entity.Iconst.PUBLIC_MESSAGE;
 
@@ -25,7 +24,7 @@ public class ClientImpl implements Client {
     }
 
     @Override
-    public void establishConnection(String host, int port) throws UnknownHostException, IOException {
+    public void establishConnection(String host, int port) throws IOException {
         socket = new Socket(host, port);
         os = new ObjectOutputStream(socket.getOutputStream());
         is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));

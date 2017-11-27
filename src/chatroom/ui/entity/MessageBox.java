@@ -6,9 +6,6 @@ import chatroom.ui.exception.UserInputException;
 import chatroom.ui.service.ComponentManager;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +27,7 @@ public class MessageBox extends JPanel implements ActionListener, KeyListener {
     public MessageBox() {
         buttonSend.setFocusPainted(false);
         buttonClose.setFocusPainted(false);
+        inputArea.setLineWrap(true);
         JScrollPane jScrollPane = new JScrollPane(inputArea);
         setLayout(new BorderLayout());
 
@@ -83,24 +81,30 @@ public class MessageBox extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    private void sendPublicMessage() {
+        try {
+            String input = getInput();
+            componentManager.getClient().sendPublicMessage(input);
+        } catch (UserInputException exception) {
+            componentManager.getChatBox().append("您还没有输入哦！\n");
+        } catch (Exception exception) {
+            // 捕获发送中抛出的异常反馈给用户
+            componentManager.getChatBox().append(exception.getMessage());
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals(ButtonEnum.SEND.getExpression())) {
-            try {
-                String input = getInput();
-                componentManager.getClient().sendPublicMessage(input);
-            } catch (UserInputException exception) {
-                componentManager.getChatBox().append("您还没有输入哦！\n");
-            } catch (Exception exception) {
-                // 捕获发送中抛出的异常反馈给用户
-                componentManager.getChatBox().append(exception.getMessage());
-            }
+            sendPublicMessage();
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-       // System.out.println(e.getKeyChar() + e.getModifiers());
+       if (e.getKeyChar() + e.getModifiers() == 12) {
+           sendPublicMessage();
+       }
     }
 
     @Override

@@ -27,6 +27,7 @@ public class Chatroom extends JFrame {
     public Chatroom() {
         menuBox = new MenuBox();
         chatBox = new JTextArea(13, 92);
+        chatBox.setLineWrap(true);
         chatBox.setEditable(false);
         JScrollPane scrollChatBox = new JScrollPane(chatBox);
         messageBox = new MessageBox();
