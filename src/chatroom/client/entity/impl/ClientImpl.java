@@ -19,6 +19,10 @@ public class ClientImpl implements Client {
 
     private ComponentManager componentManager;
 
+    public ClientImpl() {
+
+    }
+
     public ClientImpl(ComponentManager componentManager) {
         this.componentManager = componentManager;
     }
@@ -37,7 +41,7 @@ public class ClientImpl implements Client {
             Object object = is.readObject();
             Message message = (Message) object;
             // 响应消息
-            if (message.getType() == PUBLIC_MESSAGE) {
+            if (componentManager != null && message.getType() == PUBLIC_MESSAGE) {
                 componentManager.getChatBox().append(message.getContent() + "\n");
             }
         }

@@ -1,14 +1,27 @@
 package chatroom.server.entity;
 
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * 服务器上下文，存放诸如在线列表之类的。
+ * 相当于一个公告栏，采用观察者模式。服务器上下文是主体(subject),各种服务是观察者(observer)。
  */
-public interface ServerContent {
-
-    void addOnlineUser();
-
+public class ServerContent {
     /**
-     * 将用户从在线列表中删除，为防止恶意删除后期应该添加安全措施。
+     * 统计在线人数
      */
-    void offlineUserById();
+    private static int onlineCount = 0;
+    /**
+     * 保存用户信息
+     */
+    private Map<Integer, User> userMap = new HashMap<>();
+
+    public void addUser(int id, User user) {
+        userMap.put(id, user);
+    }
+
+    public User getUserById(int id) {
+        return userMap.get(id);
+    }
 }

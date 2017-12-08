@@ -14,7 +14,7 @@ import java.awt.event.KeyListener;
 
 public class MessageBox extends JPanel implements ActionListener, KeyListener {
 
-    private JButton buttonTest = new JButton("☺");
+    private JButton buttonTest = new TextStyle();
     private JButton buttonTest2 = new JButton("☺");
     private JButton buttonTest3 = new JButton("消息记录");
     private JTextArea inputArea = new JTextArea(4, 92);

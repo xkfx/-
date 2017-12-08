@@ -52,17 +52,21 @@ public class Chatroom extends JFrame {
         add(menuBox, BorderLayout.NORTH);
         add(mainPanel, BorderLayout.CENTER);
         // UI 到此结束
+        System.out.println("组件加载完毕");
 
+        // 让每个组件持有组件管理器
         componentManager = new ComponentManager();
         componentManager.setChatBox(chatBox);
         messageBox.setComponentManager(componentManager);
-
+        System.out.println("与服务器的连接建立0");
         // 让 client 持有组件控制器，以便响应服务器的请求： server --> client --> GUI
         Client client = new ClientImpl(componentManager);
+        System.out.println("与服务器的连接建立0 client 建立");
         // 持有组件控制器的组件都可以调用 client 的方法： GUI --> client --> server
         componentManager.setClient(client);
         try {
             client.establishConnection("localhost", 10000);
+            System.out.println("与服务器的连接建立");
             // 创建一个线程专门用于响应服务器的请求
             new Thread(new Runnable() {
                 @Override
