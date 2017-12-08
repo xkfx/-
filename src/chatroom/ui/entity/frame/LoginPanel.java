@@ -1,4 +1,4 @@
-package chatroom.ui.entity;
+package chatroom.ui.entity.frame;
 
 import chatroom.client.entity.Client;
 import chatroom.client.entity.impl.ClientImpl;

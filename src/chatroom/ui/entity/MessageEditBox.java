@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class MessageBox extends JPanel implements ActionListener, KeyListener {
+public class MessageEditBox extends JPanel implements ActionListener, KeyListener {
 
     private JButton buttonTest = new TextStyle();
     private JButton buttonTest2 = new JButton("☺");
@@ -24,7 +24,7 @@ public class MessageBox extends JPanel implements ActionListener, KeyListener {
     private Client client;
     private ComponentManager componentManager;
 
-    public MessageBox() {
+    public MessageEditBox() {
         buttonSend.setFocusPainted(false);
         buttonClose.setFocusPainted(false);
         inputArea.setLineWrap(true);
@@ -116,6 +116,6 @@ public class MessageBox extends JPanel implements ActionListener, KeyListener {
     }
 
     public static void main(String[] args) {
-        MessageBox messageBox = new MessageBox();
+        MessageEditBox messageEditBox = new MessageEditBox();
     }
 }

@@ -53,19 +53,19 @@ public class MyServer {
 
                     // 准备接受第一个请求: 身份认证
                     is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-                    Object object = is.readObject();
-                    Message message = (Message) object;
-                    if (message.getType() == VISITOR_ACCESS) {
-                        messageService.publicMessage(message);
-                    } else {
-                        throw new IOException("某个用户登陆失败");
-                    }
-                    System.out.println("某个 socket 完成认证");
+//                    Object object = is.readObject();
+//                    Message message = (Message) object;
+//                    if (message.getType() == VISITOR_ACCESS) {
+//                        messageService.publicMessage(message);
+//                    } else {
+//                        throw new IOException("某个用户登陆失败");
+//                    }
+//                    System.out.println("某个 socket 完成认证");
 
                     // 等待客户端的请求
                     while (true && !socket.isClosed()) {
-                        object = is.readObject();
-                        message = (Message) object;
+                        Object object = is.readObject();
+                        Message message = (Message) object;
                         if (message.getType() == PUBLIC_MESSAGE) {
                             messageService.publicMessage(message);
                         }

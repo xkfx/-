@@ -1,6 +1,6 @@
 package chatroom.test;
 
-import chatroom.ui.entity.Chatroom;
+import chatroom.ui.entity.frame.Chatroom;
 
 import javax.swing.*;
 import java.awt.*;
