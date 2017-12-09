@@ -1,4 +1,4 @@
-package chatroom.ui.exception;
+package chatroom.client.ui.exception;
 
 public class UIException extends Exception {
     public UIException(String message) {

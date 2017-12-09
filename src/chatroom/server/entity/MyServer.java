@@ -28,7 +28,7 @@ public class MyServer {
     public void startup() {
         ServerSocket server = null;
         try {
-            server = new ServerSocket(10000);
+            server = new ServerSocket(10001);
             System.out.println("服务器正在监听 10000 端口 ...");
             while (true) {
                 Socket socket = server.accept();

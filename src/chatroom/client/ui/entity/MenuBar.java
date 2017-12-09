@@ -1,4 +1,4 @@
-package chatroom.ui.entity;
+package chatroom.client.ui.entity;
 
 import javax.swing.*;
 import java.awt.*;

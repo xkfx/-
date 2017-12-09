@@ -1,4 +1,4 @@
-package chatroom.ui.exception;
+package chatroom.client.ui.exception;
 
 public class UserInputException extends UIException {
     public UserInputException(String message) {

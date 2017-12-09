@@ -1,9 +1,9 @@
-package chatroom.ui.entity.frame;
+package chatroom.client.ui.entity;
 
 import chatroom.client.entity.Client;
 import chatroom.client.entity.impl.ClientImpl;
-import chatroom.ui.enums.ButtonEnum;
-import chatroom.ui.enums.LabelEunm;
+import chatroom.client.ui.enums.ButtonEnum;
+import chatroom.client.ui.enums.LabelEunm;
 
 import javax.swing.*;
 import java.awt.*;

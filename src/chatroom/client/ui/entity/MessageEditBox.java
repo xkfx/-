@@ -1,9 +1,9 @@
-package chatroom.ui.entity;
+package chatroom.client.ui.entity;
 
 import chatroom.client.entity.Client;
-import chatroom.ui.enums.ButtonEnum;
-import chatroom.ui.exception.UserInputException;
-import chatroom.ui.service.ComponentManager;
+import chatroom.client.ui.enums.ButtonEnum;
+import chatroom.client.ui.exception.UserInputException;
+import chatroom.client.ui.service.UIManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class MessageEditBox extends JPanel implements ActionListener, KeyListene
     private JButton buttonClose = new JButton(ButtonEnum.CLOESE.getExpression());
 
     private Client client;
-    private ComponentManager componentManager;
+    private UIManager UIManager;
 
     public MessageEditBox() {
         buttonSend.setFocusPainted(false);
@@ -62,8 +62,8 @@ public class MessageEditBox extends JPanel implements ActionListener, KeyListene
         this.client = client;
     }
 
-    public void setComponentManager(ComponentManager componentManager) {
-        this.componentManager = componentManager;
+    public void setUIManager(UIManager UIManager) {
+        this.UIManager = UIManager;
     }
 
     /**
@@ -84,12 +84,12 @@ public class MessageEditBox extends JPanel implements ActionListener, KeyListene
     private void sendPublicMessage() {
         try {
             String input = getInput();
-            componentManager.getClient().sendPublicMessage(input);
+            UIManager.getClient().sendPublicMessage(input);
         } catch (UserInputException exception) {
-            componentManager.getChatBox().append("您还没有输入哦！\n");
+            UIManager.getChatBox().append("您还没有输入哦！\n");
         } catch (Exception exception) {
             // 捕获发送中抛出的异常反馈给用户
-            componentManager.getChatBox().append(exception.getMessage());
+            UIManager.getChatBox().append(exception.getMessage());
         }
     }
 

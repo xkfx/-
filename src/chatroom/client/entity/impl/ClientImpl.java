@@ -2,7 +2,7 @@ package chatroom.client.entity.impl;
 
 import chatroom.client.entity.Client;
 import chatroom.entity.Message;
-import chatroom.ui.service.ComponentManager;
+import chatroom.client.ui.service.UIManager;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -17,14 +17,14 @@ public class ClientImpl implements Client {
     private ObjectOutputStream os;
     private ObjectInputStream is;
 
-    private ComponentManager componentManager;
+    private UIManager UIManager;
 
     public ClientImpl() {
 
     }
 
-    public ClientImpl(ComponentManager componentManager) {
-        this.componentManager = componentManager;
+    public ClientImpl(UIManager UIManager) {
+        this.UIManager = UIManager;
     }
 
     @Override
@@ -41,8 +41,8 @@ public class ClientImpl implements Client {
             Object object = is.readObject();
             Message message = (Message) object;
             // 响应消息
-            if (componentManager != null && message.getType() == PUBLIC_MESSAGE) {
-                componentManager.getChatBox().append(message.getContent() + "\n");
+            if (UIManager != null && message.getType() == PUBLIC_MESSAGE) {
+                UIManager.getChatBox().append(message.getContent() + "\n");
             }
         }
     }

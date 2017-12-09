@@ -1,4 +1,4 @@
-package chatroom.ui.enums;
+package chatroom.client.ui.enums;
 
 /**
  * 使用枚举表述常量数据字段

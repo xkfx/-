@@ -1,4 +1,4 @@
-package chatroom.ui.enums;
+package chatroom.client.ui.enums;
 
 public enum  LabelEunm {
 
