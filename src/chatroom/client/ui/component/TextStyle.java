@@ -1,8 +1,9 @@
-package chatroom.client.ui.entity;
+package chatroom.client.ui.component;
 
 import chatroom.client.ui.enums.ButtonEnum;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class TextStyle extends JButton {
 

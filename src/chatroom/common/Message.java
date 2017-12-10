@@ -1,4 +1,4 @@
-package chatroom.entity;
+package chatroom.common;
 
 import java.io.Serializable;
 

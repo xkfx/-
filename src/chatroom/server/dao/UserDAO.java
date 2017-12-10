@@ -1,6 +1,5 @@
 package chatroom.server.dao;
 
-import chatroom.entity.Message;
 import chatroom.server.entity.User;
 
 public interface UserDAO {

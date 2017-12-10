@@ -1,6 +1,5 @@
 package chatroom.server.dao.impl;
 
-import chatroom.entity.Message;
 import chatroom.server.dao.UserDAO;
 import chatroom.server.entity.User;
 

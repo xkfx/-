@@ -1,9 +1,9 @@
-package chatroom.client.ui.entity;
+package chatroom.client.ui.component;
 
-import chatroom.client.entity.Client;
+import chatroom.client.model.Client;
 import chatroom.client.ui.enums.ButtonEnum;
 import chatroom.client.ui.exception.UserInputException;
-import chatroom.client.ui.service.UIManager;
+import chatroom.client.model.UIManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class MessageEditBox extends JPanel implements ActionListener, KeyListener {
+public class MessageEditPanel extends JPanel implements ActionListener, KeyListener {
 
     private JButton buttonTest = new TextStyle();
     private JButton buttonTest2 = new JButton("☺");
@@ -24,7 +24,7 @@ public class MessageEditBox extends JPanel implements ActionListener, KeyListene
     private Client client;
     private UIManager UIManager;
 
-    public MessageEditBox() {
+    public MessageEditPanel() {
         buttonSend.setFocusPainted(false);
         buttonClose.setFocusPainted(false);
         inputArea.setLineWrap(true);
@@ -56,6 +56,10 @@ public class MessageEditBox extends JPanel implements ActionListener, KeyListene
 
         buttonSend.addActionListener(this);
         inputArea.addKeyListener(this);
+    }
+
+    public void addActionListener(ActionListener listener) {
+        buttonSend.addActionListener(listener);
     }
 
     public void setClient(Client client) {
@@ -116,6 +120,6 @@ public class MessageEditBox extends JPanel implements ActionListener, KeyListene
     }
 
     public static void main(String[] args) {
-        MessageEditBox messageEditBox = new MessageEditBox();
+        MessageEditPanel messageEditPanel = new MessageEditPanel();
     }
 }

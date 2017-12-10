@@ -1,6 +1,6 @@
 package chatroom.server.service;
 
-import chatroom.entity.Message;
+import chatroom.common.Message;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
 

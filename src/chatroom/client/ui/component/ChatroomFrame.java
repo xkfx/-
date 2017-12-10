@@ -1,24 +1,29 @@
-package chatroom.client.ui.entity;
+package chatroom.client.ui.component;
 
-import chatroom.client.entity.Client;
-import chatroom.client.entity.impl.ClientImpl;
-import chatroom.client.ui.service.UIManager;
+import chatroom.client.model.Client;
+import chatroom.client.model.impl.ClientImpl;
+import chatroom.client.model.UIManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 /**
  * 聊天室窗体
  */
-public class Chatroom extends JFrame {
+public class ChatroomFrame extends JFrame {
 
     private UIManager UIManager;
+
+    MessageDisplayPanel messageDisplayPanel;
+
+    MessageEditPanel messageEditPanel;
 
     /**
      * 初始化窗体
      */
-    public Chatroom() {
+    public ChatroomFrame() {
         // 设置窗体
         setTitle("chatroom v1.0");
         setSize(1360, 828);
@@ -26,13 +31,13 @@ public class Chatroom extends JFrame {
         setLocationRelativeTo(null);
 
          // 配置组件
-        MessageDisplayBox messageDisplayBox = new MessageDisplayBox(13, 92);
-        MessageEditBox messageEditBox = new MessageEditBox();
+        messageDisplayPanel = new MessageDisplayPanel(13, 92);
+        messageEditPanel = new MessageEditPanel();
 
         JPanel chatPanel = new JPanel();
         chatPanel.setLayout(new BorderLayout());
-        chatPanel.add(messageDisplayBox, BorderLayout.CENTER);
-        chatPanel.add(messageEditBox, BorderLayout.SOUTH);
+        chatPanel.add(messageDisplayPanel, BorderLayout.CENTER);
+        chatPanel.add(messageEditPanel, BorderLayout.SOUTH);
 
         JPanel rightColumn = new RightColumn();
 
@@ -41,7 +46,7 @@ public class Chatroom extends JFrame {
         mainPanel.add(chatPanel, BorderLayout.CENTER);
         mainPanel.add(rightColumn, BorderLayout.EAST);
 
-        JPanel menuBar = new chatroom.client.ui.entity.MenuBar();
+        JPanel menuBar = new chatroom.client.ui.component.MenuBar();
 
         // 布局
         setLayout(new BorderLayout());
@@ -49,9 +54,9 @@ public class Chatroom extends JFrame {
         add(mainPanel, BorderLayout.CENTER);
 
         // 让每个组件持有组件管理器
-        UIManager = new chatroom.client.ui.service.UIManager();
-        UIManager.setChatBox(messageDisplayBox);
-        messageEditBox.setUIManager(UIManager);
+        UIManager = new UIManager();
+        UIManager.setChatBox(messageDisplayPanel);
+        messageEditPanel.setUIManager(UIManager);
 
         // 让 client 持有组件控制器，以便响应服务器的请求： server --> client --> GUI
         Client client = new ClientImpl(UIManager);
@@ -84,5 +89,9 @@ public class Chatroom extends JFrame {
             System.out.println("建立连接失败====\n==========\n===========\n========\n===============");
             e.printStackTrace();
         }
+    }
+
+    public void addActionListener(ActionListener listener) {
+        messageEditPanel.addActionListener(listener);
     }
 }

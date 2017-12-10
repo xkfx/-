@@ -1,4 +1,4 @@
-package chatroom.client.entity;
+package chatroom.client.model;
 
 import java.io.IOException;
 

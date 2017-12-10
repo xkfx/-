@@ -1,6 +1,6 @@
 package chatroom.server.service;
 
-import chatroom.entity.Message;
+import chatroom.common.Message;
 
 import java.io.IOException;
 import java.net.Socket;

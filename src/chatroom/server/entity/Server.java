@@ -1,6 +1,6 @@
 package chatroom.server.entity;
 
-import chatroom.entity.Message;
+import chatroom.common.Message;
 import chatroom.server.service.MessageService;
 import chatroom.server.service.UserService;
 import chatroom.server.service.impl.MessageServiceImpl;
@@ -12,24 +12,18 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static chatroom.entity.Iconst.PUBLIC_MESSAGE;
-import static chatroom.entity.Iconst.VISITOR_ACCESS;
+import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 
-public class MyServer {
+public class Server {
     private int count = 0;
     private MessageService messageService = new MessageServiceImpl();
     private UserService userService = new UserServiceImpl();
-
-    public static void main(String[] args) {
-        MyServer myServer = new MyServer();
-        myServer.startup();
-    }
 
     public void startup() {
         ServerSocket server = null;
         try {
             server = new ServerSocket(10001);
-            System.out.println("服务器正在监听 10000 端口 ...");
+            System.out.println("服务器正在监听 10001 端口 ...");
             while (true) {
                 Socket socket = server.accept();
                 serve(socket);

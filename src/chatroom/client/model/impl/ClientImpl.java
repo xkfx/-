@@ -1,8 +1,8 @@
-package chatroom.client.entity.impl;
+package chatroom.client.model.impl;
 
-import chatroom.client.entity.Client;
-import chatroom.entity.Message;
-import chatroom.client.ui.service.UIManager;
+import chatroom.client.model.Client;
+import chatroom.common.Message;
+import chatroom.client.model.UIManager;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import static chatroom.entity.Iconst.PUBLIC_MESSAGE;
+import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 
 public class ClientImpl implements Client {
     private Socket socket;

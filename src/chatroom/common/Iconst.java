@@ -1,4 +1,4 @@
-package chatroom.entity;
+package chatroom.common;
 
 /**
  * 通用实体相关的常量定义

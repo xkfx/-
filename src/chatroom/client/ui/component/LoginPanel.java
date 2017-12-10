@@ -1,7 +1,7 @@
-package chatroom.client.ui.entity;
+package chatroom.client.ui.component;
 
-import chatroom.client.entity.Client;
-import chatroom.client.entity.impl.ClientImpl;
+import chatroom.client.model.Client;
+import chatroom.client.model.impl.ClientImpl;
 import chatroom.client.ui.enums.ButtonEnum;
 import chatroom.client.ui.enums.LabelEunm;
 
@@ -18,7 +18,7 @@ public class LoginPanel extends JFrame implements ActionListener {
     private JTextField textNick = new JTextField();
 
     public LoginPanel() {
-        setTitle("chatroom v1.0");
+        setTitle("Little Pony v1.0");
         setSize(450, 210);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -28,6 +28,7 @@ public class LoginPanel extends JFrame implements ActionListener {
 
         button.setFocusPainted(false);
         textHost.setText("127.0.0.1");
+        textNick.setText("撒旦阿斯顿");
         labelHost.setFont(new Font("", 0, 36));
         textHost.setFont(new Font("", 0, 36));
         labelName.setFont(new Font("", 0, 36));
