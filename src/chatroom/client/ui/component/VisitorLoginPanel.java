@@ -17,8 +17,8 @@ public class VisitorLoginPanel extends JPanel {
         textNick = new JTextField();
         // 设置组件
         textNick.setText("撒旦阿斯顿");
-        labelName.setFont(new Font("", 0, 36));
-        textNick.setFont(new Font("", 0, 36));
+        labelName.setFont(new Font("", 0, 25));
+        textNick.setFont(new Font("", 0, 25));
         // 布局
         JPanel panelInput = new JPanel();
         panelInput.setLayout(new GridLayout(1, 2));

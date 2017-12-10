@@ -12,15 +12,15 @@ public class FormalUserLoginPanel extends JPanel {
 
     public FormalUserLoginPanel() {
         // 创建组件
-        JLabel labelUsername = new JLabel("用户名");
-        JLabel labelPassword = new JLabel("密码");
+        JLabel labelUsername = new JLabel("用户名：");
+        JLabel labelPassword = new JLabel("密码：");
         textUsername = new JTextField();
         textPassword = new JPasswordField();
         // 设置组件
-        labelUsername.setFont(new Font("", 0, 36));
-        labelPassword.setFont(new Font("", 0, 36));
-        textUsername.setFont(new Font("", 0, 36));
-        textPassword.setFont(new Font("", 0, 36));
+        labelUsername.setFont(new Font("", 0, 20));
+        labelPassword.setFont(new Font("", 0, 20));
+        textUsername.setFont(new Font("", 0, 20));
+        textPassword.setFont(new Font("", 0, 20));
         // 布局
         JPanel panelInput = new JPanel();
         panelInput.setLayout(new GridLayout(2, 2));
