@@ -2,6 +2,7 @@ package chatroom.client.ui.component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class FormalUserLoginPanel extends JPanel {
 
@@ -41,5 +42,9 @@ public class FormalUserLoginPanel extends JPanel {
         setLayout(new BorderLayout());
         add(panelInput, BorderLayout.CENTER);
         add(panelButton, BorderLayout.SOUTH);
+    }
+
+    public void addActionListener(ActionListener listener) {
+
     }
 }

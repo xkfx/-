@@ -1,13 +1,18 @@
 package chatroom.client.ui.component;
 
+import chatroom.client.controller.ClientController;
+import chatroom.client.model.UIManager;
+
 import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
+import java.awt.event.ActionListener;
 
 public class LoginFrame extends JFrame {
 
-    JTextField textServerIp;
-    JTextField textServerPort;
+    private JTextField textServerIp;
+    private JTextField textServerPort;
+
+    private VisitorLoginPanel visitorLoginPanel;
 
     public LoginFrame() {
         setTitle("Little Pony v1.0");
@@ -29,7 +34,7 @@ public class LoginFrame extends JFrame {
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
         FormalUserLoginPanel formalUserLoginPanel = new FormalUserLoginPanel();
-        VisitorLoginPanel visitorLoginPanel = new VisitorLoginPanel();
+        visitorLoginPanel = new VisitorLoginPanel();
         tabbedPane.add("游客", visitorLoginPanel);
         tabbedPane.add("用户登陆", formalUserLoginPanel);
 
@@ -44,12 +49,30 @@ public class LoginFrame extends JFrame {
         add(labelLogo, BorderLayout.CENTER);
     }
 
+    public String getServerIp() {
+        return textServerIp.getText();
+    }
+
+    public int getServerPort() {
+        return Integer.parseInt(textServerPort.getText());
+    }
+
+    public String getNickname() {
+        return visitorLoginPanel.getNickname();
+    }
+
+    public void addActionListener(ActionListener listener) {
+        visitorLoginPanel.addActionListener(listener);
+    }
+
     public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            LoginFrame loginFrame = new LoginFrame();
-            loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            loginFrame.setVisible(true);
-        });
+            // 创建客户端 UI 管理器
+            UIManager uiManager = new UIManager();
+            // 创建监听器
+            ClientController controller = new ClientController();
+            // 创建窗口 & 注册事件监听
+            uiManager.init(controller);
+            // 启动完毕
     }
 
 }

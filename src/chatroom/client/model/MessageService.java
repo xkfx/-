@@ -1,11 +1,13 @@
 package chatroom.client.model;
 
+import chatroom.common.Message;
+
 import java.io.IOException;
 
 /**
  * 客户端接口，供 GUI 调用的顶层接口。
  */
-public interface Client {
+public interface MessageService {
     /**
      * 与相应服务器建立连接
      * @param host
@@ -13,6 +15,8 @@ public interface Client {
      */
     void establishConnection(String host, int port)
             throws IOException;
+
+    Message send(Message message) throws IOException;
 
     /**
      * 负责接收，解析来自服务器的对象，并调用相应的服务，client 应该持有 GUI 的引用

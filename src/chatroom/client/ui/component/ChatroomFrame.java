@@ -1,7 +1,7 @@
 package chatroom.client.ui.component;
 
-import chatroom.client.model.Client;
-import chatroom.client.model.impl.ClientImpl;
+import chatroom.client.model.MessageService;
+import chatroom.client.model.impl.MessageServiceImpl;
 import chatroom.client.model.UIManager;
 
 import javax.swing.*;
@@ -58,12 +58,12 @@ public class ChatroomFrame extends JFrame {
         UIManager.setChatBox(messageDisplayPanel);
         messageEditPanel.setUIManager(UIManager);
 
-        // 让 client 持有组件控制器，以便响应服务器的请求： server --> client --> GUI
-        Client client = new ClientImpl(UIManager);
-        // 持有组件控制器的组件都可以调用 client 的方法： GUI --> client --> server
-        UIManager.setClient(client);
+        // 让 messageService 持有组件控制器，以便响应服务器的请求： server --> messageService --> GUI
+        MessageService messageService = new MessageServiceImpl(UIManager);
+        // 持有组件控制器的组件都可以调用 messageService 的方法： GUI --> messageService --> server
+        UIManager.setMessageService(messageService);
         try {
-            client.establishConnection("localhost", 10001);
+            messageService.establishConnection("localhost", 10001);
             System.out.println("与服务器的连接建立");
             // 创建一个线程专门用于响应服务器的请求
             new Thread(new Runnable() {
@@ -71,13 +71,13 @@ public class ChatroomFrame extends JFrame {
                 public void run() {
                     try {
                         while(true) {
-                            client.doResponse();
+                            messageService.doResponse();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     } finally {
                         try {
-                            client.shutdown();
+                            messageService.shutdown();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

@@ -1,6 +1,6 @@
 package chatroom.client.model.impl;
 
-import chatroom.client.model.Client;
+import chatroom.client.model.MessageService;
 import chatroom.common.Message;
 import chatroom.client.model.UIManager;
 
@@ -12,18 +12,18 @@ import java.net.Socket;
 
 import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 
-public class ClientImpl implements Client {
+public class MessageServiceImpl implements MessageService {
     private Socket socket;
     private ObjectOutputStream os;
     private ObjectInputStream is;
 
     private UIManager UIManager;
 
-    public ClientImpl() {
+    public MessageServiceImpl() {
 
     }
 
-    public ClientImpl(UIManager UIManager) {
+    public MessageServiceImpl(UIManager UIManager) {
         this.UIManager = UIManager;
     }
 
@@ -32,6 +32,11 @@ public class ClientImpl implements Client {
         socket = new Socket(host, port);
         os = new ObjectOutputStream(socket.getOutputStream());
         is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+    }
+
+    @Override
+    public Message send(Message message) {
+        return null;
     }
 
     @Override

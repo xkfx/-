@@ -5,25 +5,26 @@ import chatroom.client.ui.enums.LabelEunm;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class VisitorLoginPanel extends JPanel {
 
     private JButton buttonLogin;
-    private JTextField textNick;
+    private JTextField textNickname;
 
     public VisitorLoginPanel() {
         // 创建组件
         JLabel labelName = new JLabel(LabelEunm.NICKNAME.getExpression());
-        textNick = new JTextField();
+        textNickname = new JTextField();
         // 设置组件
-        textNick.setText("撒旦阿斯顿");
+        textNickname.setText("撒旦阿斯顿");
         labelName.setFont(new Font("", 0, 25));
-        textNick.setFont(new Font("", 0, 25));
+        textNickname.setFont(new Font("", 0, 25));
         // 布局
         JPanel panelInput = new JPanel();
         panelInput.setLayout(new GridLayout(1, 2));
         panelInput.add(labelName);
-        panelInput.add(textNick);
+        panelInput.add(textNickname);
 
         buttonLogin = new JButton(ButtonEnum.CONNECT_TO_SERVER.getExpression());
         buttonLogin.setFocusPainted(false);
@@ -34,5 +35,13 @@ public class VisitorLoginPanel extends JPanel {
         setLayout(new BorderLayout());
         add(panelInput, BorderLayout.CENTER);
         add(panelButton, BorderLayout.SOUTH);
+    }
+
+    public String getNickname() {
+        return textNickname.getText();
+    }
+
+    public void addActionListener(ActionListener listener) {
+        buttonLogin.addActionListener(listener);
     }
 }
