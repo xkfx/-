@@ -1,6 +1,6 @@
 package chatroom.client.model;
 
-import chatroom.client.controller.ClientController;
+import chatroom.client.ui.component.ChatroomFrame;
 import chatroom.client.ui.component.LoginFrame;
 import chatroom.client.ui.component.MessageDisplayPanel;
 
@@ -12,7 +12,7 @@ import java.awt.*;
  */
 public class UIManager {
 
-    private MessageService messageService;
+    private ClientMessageService clientMessageService;
     private MessageDisplayPanel messageDisplayPanel;
 
     public MessageDisplayPanel getChatBox() {
@@ -23,33 +23,38 @@ public class UIManager {
         this.messageDisplayPanel = messageDisplayPanel;
     }
 
-    public MessageService getMessageService() {
-        return messageService;
+    public ClientMessageService getClientMessageService() {
+        return clientMessageService;
     }
 
-    public void setMessageService(MessageService messageService) {
-        this.messageService = messageService;
+    public void setClientMessageService(ClientMessageService clientMessageService) {
+        this.clientMessageService = clientMessageService;
     }
 
     private LoginFrame loginFrame;
 
-    private ClientController clientController;
+    private ChatroomFrame chatroomFrame;
 
     /**
      * 创建一个登陆界面
      */
-    public void init(ClientController controller) {
+    public void init() {
         EventQueue.invokeLater(() -> {
-            clientController = controller;
             loginFrame = new LoginFrame();
             loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             loginFrame.setVisible(true);
-            loginFrame.addActionListener(controller);
-            controller.setUiManager(this);
         });
     }
 
     public LoginFrame getLoginFrame() {
         return loginFrame;
+    }
+
+    public ChatroomFrame getChatroomFrame() {
+        if (chatroomFrame == null) {
+            chatroomFrame = new ChatroomFrame();
+            chatroomFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        return chatroomFrame;
     }
 }

@@ -1,6 +1,6 @@
 package chatroom.client.ui.component;
 
-import chatroom.client.model.MessageService;
+import chatroom.client.model.ClientMessageService;
 import chatroom.client.ui.enums.ButtonEnum;
 import chatroom.client.ui.exception.UserInputException;
 import chatroom.client.model.UIManager;
@@ -21,7 +21,7 @@ public class MessageEditPanel extends JPanel implements ActionListener, KeyListe
     private JButton buttonSend = new JButton(ButtonEnum.SEND.getExpression());
     private JButton buttonClose = new JButton(ButtonEnum.CLOESE.getExpression());
 
-    private MessageService messageService;
+    private ClientMessageService clientMessageService;
     private UIManager UIManager;
 
     public MessageEditPanel() {
@@ -62,8 +62,8 @@ public class MessageEditPanel extends JPanel implements ActionListener, KeyListe
         buttonSend.addActionListener(listener);
     }
 
-    public void setMessageService(MessageService messageService) {
-        this.messageService = messageService;
+    public void setClientMessageService(ClientMessageService clientMessageService) {
+        this.clientMessageService = clientMessageService;
     }
 
     public void setUIManager(UIManager UIManager) {
@@ -88,7 +88,7 @@ public class MessageEditPanel extends JPanel implements ActionListener, KeyListe
     private void sendPublicMessage() {
         try {
             String input = getInput();
-            UIManager.getMessageService().sendPublicMessage(input);
+            UIManager.getClientMessageService().sendPublicMessage(input);
         } catch (UserInputException exception) {
             UIManager.getChatBox().append("您还没有输入哦！\n");
         } catch (Exception exception) {
@@ -117,9 +117,5 @@ public class MessageEditPanel extends JPanel implements ActionListener, KeyListe
 
     @Override
     public void keyReleased(KeyEvent e) {
-    }
-
-    public static void main(String[] args) {
-        MessageEditPanel messageEditPanel = new MessageEditPanel();
     }
 }

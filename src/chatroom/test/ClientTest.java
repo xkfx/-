@@ -1,6 +1,6 @@
 package chatroom.test;
 
-import chatroom.client.controller.ClientController;
+import chatroom.client.controller.LoginFrameFrontController;
 import chatroom.client.ui.component.ChatroomFrame;
 
 import javax.swing.*;
@@ -15,7 +15,7 @@ public class ClientTest {
             chatroomFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             chatroomFrame.setVisible(true);
             // 创建监听器
-            ClientController controller = new ClientController();
+            LoginFrameFrontController controller = new LoginFrameFrontController();
             // 注册事件监听
             chatroomFrame.addActionListener(controller);
             // 启动完毕

@@ -1,6 +1,6 @@
 package chatroom.client.ui.component;
 
-import chatroom.client.controller.ClientController;
+import chatroom.client.controller.LoginFrameFrontController;
 import chatroom.client.model.UIManager;
 
 import javax.swing.*;
@@ -64,15 +64,4 @@ public class LoginFrame extends JFrame {
     public void addActionListener(ActionListener listener) {
         visitorLoginPanel.addActionListener(listener);
     }
-
-    public static void main(String[] args) {
-            // 创建客户端 UI 管理器
-            UIManager uiManager = new UIManager();
-            // 创建监听器
-            ClientController controller = new ClientController();
-            // 创建窗口 & 注册事件监听
-            uiManager.init(controller);
-            // 启动完毕
-    }
-
 }

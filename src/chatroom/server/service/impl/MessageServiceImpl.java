@@ -1,6 +1,7 @@
 package chatroom.server.service.impl;
 
 import chatroom.common.Message;
+import chatroom.server.entity.Visitor;
 import chatroom.server.service.MessageService;
 
 import java.io.IOException;
@@ -12,27 +13,26 @@ import java.util.Map;
 import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 
 public class MessageServiceImpl implements MessageService {
-    private Map<Integer, ObjectOutputStream> objectOutputStreamMap = new HashMap<>();
+    private Map<Socket, Visitor> socketVisitorMap = new HashMap<>();
 
     @Override
-    public void addAcceptor(int id, Socket socket) throws IOException {
-        ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
-        objectOutputStreamMap.put(id, os);
+    public void addPublicMessageAcceptor(Socket socket, Visitor visitor) throws IOException {
+        socketVisitorMap.put(socket, visitor);
     }
 
     @Override
-    public void deleteAcceptorById(int id) {
-        objectOutputStreamMap.remove(id);
+    public void deleteAcceptorById(Socket socket) {
+        socketVisitorMap.remove(socket);
     }
 
     @Override
     public void publicMessage(Message message) throws IOException {
         if (message.getType() == PUBLIC_MESSAGE) {
-            for (ObjectOutputStream os : objectOutputStreamMap.values()) {
-                os.writeObject(message);
-                os.flush();
+            for (Socket socket : socketVisitorMap.keySet()) {
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                outputStream.writeObject(message);
+                outputStream.flush();
             }
-
         }
     }
 }

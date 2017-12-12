@@ -1,6 +1,5 @@
-package chatroom.client.model.impl;
+package chatroom.client.model;
 
-import chatroom.client.model.MessageService;
 import chatroom.common.Message;
 import chatroom.client.model.UIManager;
 
@@ -12,34 +11,39 @@ import java.net.Socket;
 
 import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 
-public class MessageServiceImpl implements MessageService {
+public class ClientMessageService {
     private Socket socket;
     private ObjectOutputStream os;
     private ObjectInputStream is;
 
     private UIManager UIManager;
 
-    public MessageServiceImpl() {
+    public ClientMessageService() {
 
     }
 
-    public MessageServiceImpl(UIManager UIManager) {
+    public ClientMessageService(UIManager UIManager) {
         this.UIManager = UIManager;
     }
 
-    @Override
     public void establishConnection(String host, int port) throws IOException {
         socket = new Socket(host, port);
         os = new ObjectOutputStream(socket.getOutputStream());
         is = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
     }
 
-    @Override
+    public Socket getSocket() {
+        return socket;
+    }
+
     public Message send(Message message) {
         return null;
     }
 
-    @Override
+    public void disconnection() {
+
+    }
+
     public void doResponse() throws IOException, ClassNotFoundException {
         if (socket != null && !socket.isClosed()) {
             // 接收消息
@@ -52,7 +56,6 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-    @Override
     public void sendPublicMessage(String text) throws IOException {
         if (socket != null) {
             Message message = new Message(PUBLIC_MESSAGE, socket.getInetAddress() + ": " + text);
@@ -62,14 +65,12 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
-    @Override
     public void shutdown() throws IOException {
         os.close();
         is.close();
         socket.close();
     }
 
-    @Override
     public void sendOfflineRequest() {
 
     }
