@@ -22,7 +22,7 @@ public interface MessageService {
     /**
      * 消息群发服务，仅向在线用户发送。
      */
-    void publicMessage(Message message) throws IOException;
+    void publicMessage(Socket socket, Message message) throws IOException;
 
     /**
      * 向单个用户发送消息

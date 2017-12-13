@@ -25,9 +25,9 @@ public class ChatroomBackController {
             public void run() {
                 ObjectInputStream inputStream;
                 try {
-                    inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                     while (true) {
                         try {
+                            inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                             Object object = inputStream.readObject();
                             Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) publicMessage(message.getContent());

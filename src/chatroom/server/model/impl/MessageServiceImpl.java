@@ -27,16 +27,18 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void publicMessage(Message message) throws IOException {
+    public void publicMessage(Socket socket, Message message) throws IOException {
         if (message.getType() == PUBLIC_MESSAGE) {
-            for (Socket socket : socketVisitorMap.keySet()) {
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                String content = "【游客】" + socketVisitorMap.get(socket).getNickname()
-                        + " " + new Date() + "\n" + message.getContent();
-                message.setContent(content);
+            StringBuilder builder = new StringBuilder();
+            builder.append("【游客】"); // 身份
+            builder.append(socketVisitorMap.get(socket).getNickname()); // 昵称
+            builder.append(" " + new Date() + "\n"); // 时间
+            builder.append(message.getContent() + "\n"); // 正文
+            message.setContent(builder.toString());
+            for (Socket eachSocket : socketVisitorMap.keySet()) {
+                ObjectOutputStream outputStream = new ObjectOutputStream(eachSocket.getOutputStream());
                 outputStream.writeObject(message);
                 outputStream.flush();
-                outputStream.close();
             }
         }
     }

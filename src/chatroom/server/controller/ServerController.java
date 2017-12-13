@@ -60,7 +60,7 @@ public class ServerController {
                             object = inputStream.readObject();
                             Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) {
-                                messageService.publicMessage(message);
+                                messageService.publicMessage(socket, message);
                             }
                         }
                     } else {
@@ -68,9 +68,10 @@ public class ServerController {
                     }
                 } catch (ClassNotFoundException notFoundException) {
                     messageService.deleteAcceptorBySocket(socket);
-                    System.out.println(socket.hashCode() + "已正常下线。");
+                    System.out.println(socket.hashCode() + "已正常下线。ClassNotFound");
                 } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    messageService.deleteAcceptorBySocket(socket);
+                    System.out.println(socket.hashCode() + "已正常下线。IOException");
                 } finally {
                     try {
                         if (inputStream != null) {
