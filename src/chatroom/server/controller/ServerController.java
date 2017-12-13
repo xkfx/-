@@ -3,10 +3,8 @@ package chatroom.server.controller;
 import chatroom.common.Message;
 import chatroom.common.VisitorLogin;
 import chatroom.server.entity.Visitor;
-import chatroom.server.service.MessageService;
-import chatroom.server.service.UserService;
-import chatroom.server.service.impl.MessageServiceImpl;
-import chatroom.server.service.impl.UserServiceImpl;
+import chatroom.server.model.MessageService;
+import chatroom.server.model.impl.MessageServiceImpl;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -39,51 +37,54 @@ public class ServerController {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("某个 socket 接入");
+                System.out.println(socket.hashCode() + "接入服务器······");
+
                 ObjectInputStream inputStream = null;
-                ObjectOutputStream outputStream = null;
                 try {
                     inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-                    outputStream = new ObjectOutputStream(socket.getOutputStream());
-
+                    System.out.println("服务器输入流创建完毕，等待客户端的第一条消息······");
+                    // 响应该 socket 的第一条消息
                     Object object = inputStream.readObject();
-                    Message message = (Message) object;
-                    if (message.getType() == VISITOR_ACCESS) {
-                        VisitorLogin visitorLogin = (VisitorLogin) message;
+                    Message firstRequest = (Message) object;
+                    if (firstRequest.getType() == VISITOR_ACCESS) {
+                        VisitorLogin visitorLogin = (VisitorLogin) firstRequest;
                         String nickname = visitorLogin.getNickname();
                         Visitor visitor = new Visitor(nickname);
-
+                        System.out.println("昵称为" + nickname + "的游客等登陆服务器······");
                         messageService.addPublicMessageAcceptor(socket, visitor);
-
-                        // to-do
-
+                        Message firstResponse = new Message();
+                        firstResponse.setFlag(true);
+                        messageService.send(socket, firstResponse);
+                        System.out.println("准备持续为此Socket提供服务······");
                         while (true) {
                             object = inputStream.readObject();
-                            message = (Message) object;
+                            Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) {
                                 messageService.publicMessage(message);
                             }
                         }
                     } else {
-                        // 结束
+                        throw new IOException();
                     }
-//                        messageService.publicMessage(message);
-//                    } else {
-//                        throw new IOException("某个用户登陆失败");
-//                    }
-//                    System.out.println("某个 socket 完成认证");
-
-                    // 等待客户端的请求
-//                    while (true && !socket.isClosed()) {
-//                        // TO-DO 客户端主动下线，锁操作。
-//                    }
-
                 } catch (ClassNotFoundException notFoundException) {
-                    notFoundException.printStackTrace();
-                    //messageService.deleteAcceptorById(id);
+                    messageService.deleteAcceptorBySocket(socket);
+                    System.out.println(socket.hashCode() + "已正常下线。");
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 } finally {
+                    try {
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    try {
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }

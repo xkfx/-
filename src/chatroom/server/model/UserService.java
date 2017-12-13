@@ -1,4 +1,4 @@
-package chatroom.server.service;
+package chatroom.server.model;
 
 import chatroom.common.Message;
 import chatroom.server.dto.Login;

@@ -39,11 +39,9 @@ public class UIManager {
      * 创建一个登陆界面
      */
     public void init() {
-        EventQueue.invokeLater(() -> {
-            loginFrame = new LoginFrame();
-            loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            loginFrame.setVisible(true);
-        });
+        loginFrame = new LoginFrame();
+        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginFrame.setVisible(true);
     }
 
     public LoginFrame getLoginFrame() {

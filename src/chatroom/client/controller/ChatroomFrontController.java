@@ -7,15 +7,19 @@ import chatroom.client.ui.component.ChatroomFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static chatroom.client.ui.enums.ButtonEnum.SEND;
+
 public class ChatroomFrontController implements ActionListener {
 
     private ClientMessageService clientMessageService;
 
     private UIManager uiManager;
 
+    private ChatroomFrame chatroomFrame;
+
     public void setUiManager(UIManager manager) {
         uiManager = manager;
-        ChatroomFrame chatroomFrame = uiManager.getChatroomFrame();
+        chatroomFrame = uiManager.getChatroomFrame();
         chatroomFrame.addActionListener(this);
     }
 
@@ -25,6 +29,9 @@ public class ChatroomFrontController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e);
+        chatroomFrame.append(e.getActionCommand() + "\n");
+        if (e.getActionCommand().equals(SEND.getExpression())) {
+            chatroomFrame.append(chatroomFrame.getText() + "\n");
+        }
     }
 }

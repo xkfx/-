@@ -1,11 +1,11 @@
-package chatroom.server.service.impl;
+package chatroom.server.model.impl;
 
 import chatroom.common.Message;
 import chatroom.server.dao.UserDAO;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
 import chatroom.server.entity.User;
-import chatroom.server.service.UserService;
+import chatroom.server.model.UserService;
 
 public class UserServiceImpl implements UserService {
     private UserDAO userDAO;

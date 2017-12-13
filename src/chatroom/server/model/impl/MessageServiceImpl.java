@@ -1,12 +1,13 @@
-package chatroom.server.service.impl;
+package chatroom.server.model.impl;
 
 import chatroom.common.Message;
 import chatroom.server.entity.Visitor;
-import chatroom.server.service.MessageService;
+import chatroom.server.model.MessageService;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +17,12 @@ public class MessageServiceImpl implements MessageService {
     private Map<Socket, Visitor> socketVisitorMap = new HashMap<>();
 
     @Override
-    public void addPublicMessageAcceptor(Socket socket, Visitor visitor) throws IOException {
+    public void addPublicMessageAcceptor(Socket socket, Visitor visitor) {
         socketVisitorMap.put(socket, visitor);
     }
 
     @Override
-    public void deleteAcceptorById(Socket socket) {
+    public void deleteAcceptorBySocket(Socket socket) {
         socketVisitorMap.remove(socket);
     }
 
@@ -30,9 +31,21 @@ public class MessageServiceImpl implements MessageService {
         if (message.getType() == PUBLIC_MESSAGE) {
             for (Socket socket : socketVisitorMap.keySet()) {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+                String content = "【游客】" + socketVisitorMap.get(socket).getNickname()
+                        + " " + new Date() + "\n" + message.getContent();
+                message.setContent(content);
                 outputStream.writeObject(message);
                 outputStream.flush();
+                outputStream.close();
             }
         }
+    }
+
+    @Override
+    public void send(Socket socket, Message message) throws IOException {
+        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+        outputStream.writeObject(message);
+        outputStream.flush();
+        System.out.println("消息" + message.getFlag() + "已经发出····");
     }
 }

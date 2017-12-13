@@ -40,27 +40,35 @@ public class LoginFrameFrontController implements ActionListener {
         String serverIp = loginFrame.getServerIp();
         int serverPort = loginFrame.getServerPort();
         String nickname = loginFrame.getNickname();
-
+        System.out.println("正在解析用户信息······");
         // 发送消息
         Message message = new VisitorLogin(nickname);
         clientMessageService = new ClientMessageService();
         Message result = null;
         try {
+            System.out.println("准备与服务器建立连接······");
             clientMessageService.establishConnection(serverIp, serverPort);
             result = clientMessageService.send(message);
+            System.out.println("等待服务器响应······");
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         if (result.getFlag()) {
+            System.out.println("正在打开窗口······");
             loginFrame.dispose();
             ChatroomFrame chatroomFrame = uiManager.getChatroomFrame();
             chatroomFrame.setVisible(true);
 
-            ChatroomBackController backController = new ChatroomBackController();
             ChatroomFrontController frontController = new ChatroomFrontController();
+            chatroomFrame.append("前台控制器初始化完毕。\n");
+            ChatroomBackController backController = new ChatroomBackController();
+            chatroomFrame.append("后台控制器初始化完毕。\n");
             backController.setUiManager(uiManager);
             backController.startup(clientMessageService.getSocket());
+            chatroomFrame.append("后台控制器启动完毕。\n");
             frontController.setUiManager(uiManager);
             frontController.setClientMessageService(clientMessageService);
         } else {
