@@ -11,6 +11,10 @@ public class Message implements Serializable {
 
     }
 
+    public Message(String content) {
+        this.content = content;
+    }
+
     public Message(int type, String content) {
         this.type = type;
         this.content = content;
