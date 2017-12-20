@@ -9,7 +9,6 @@ import chatroom.server.model.impl.MessageServiceImpl;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -20,13 +19,12 @@ public class ServerController {
     private MessageService messageService = new MessageServiceImpl();
 
     public void startup() {
-        ServerSocket server = null;
+        ServerSocket serverSocket = null;
         try {
-            server = new ServerSocket(10001);
+            serverSocket = new ServerSocket(10001);
             System.out.println("服务器正在监听 10001 端口 ...");
             while (true) {
-                Socket socket = server.accept();
-                serve(socket);
+                serve(serverSocket.accept());
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,7 +49,7 @@ public class ServerController {
                         String nickname = visitorLogin.getNickname();
                         Visitor visitor = new Visitor(nickname);
                         System.out.println("昵称为" + nickname + "的游客等登陆服务器······");
-                        messageService.addPublicMessageAcceptor(socket, visitor);
+                        messageService.addAcceptor(socket, visitor);
                         Message firstResponse = new Message();
                         firstResponse.setFlag(true);
                         messageService.send(socket, firstResponse);
@@ -60,17 +58,17 @@ public class ServerController {
                             object = inputStream.readObject();
                             Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) {
-                                messageService.publicMessage(socket, message);
+                                messageService.sendAll(socket, message);
                             }
                         }
                     } else {
                         throw new IOException();
                     }
                 } catch (ClassNotFoundException notFoundException) {
-                    messageService.deleteAcceptorBySocket(socket);
+                    messageService.deleteAcceptor(socket);
                     System.out.println(socket.hashCode() + "已正常下线。ClassNotFound");
                 } catch (IOException ioException) {
-                    messageService.deleteAcceptorBySocket(socket);
+                    messageService.deleteAcceptor(socket);
                     System.out.println(socket.hashCode() + "已正常下线。IOException");
                 } finally {
                     try {

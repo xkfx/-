@@ -17,12 +17,17 @@ public class MessageEditPanel extends JPanel {
     private JButton buttonTest = new TextStyle();
     private JButton buttonTest2 = new JButton("☺");
     private JButton buttonTest3 = new JButton("消息记录");
-    private JTextArea inputArea = new JTextArea(4, 92);
+    private JTextArea inputArea = new JTextArea(4, 22);
     private JButton buttonSend = new JButton(ButtonEnum.SEND.getExpression());
     private JButton buttonClose = new JButton(ButtonEnum.CLOESE.getExpression());
 
     private ClientMessageService clientMessageService;
     private UIManager UIManager;
+
+    public MessageEditPanel(int columns) {
+        this();
+        inputArea.setColumns(columns);
+    }
 
     public MessageEditPanel() {
         buttonSend.setFocusPainted(false);

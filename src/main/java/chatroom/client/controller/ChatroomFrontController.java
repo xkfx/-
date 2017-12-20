@@ -2,7 +2,7 @@ package chatroom.client.controller;
 
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
-import chatroom.client.ui.component.ChatroomFrame;
+import chatroom.client.ui.component.UserFrame;
 import chatroom.common.Message;
 
 import java.awt.event.ActionEvent;
@@ -12,18 +12,21 @@ import java.io.IOException;
 import static chatroom.client.ui.enums.ButtonEnum.SEND;
 import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 
+/**
+ * 监听用户动作，转换成模型更新。
+ */
 public class ChatroomFrontController implements ActionListener {
 
     private ClientMessageService clientMessageService;
 
     private UIManager uiManager;
 
-    private ChatroomFrame chatroomFrame;
+    private UserFrame userFrame;
 
     public void setUiManager(UIManager manager) {
         uiManager = manager;
-        chatroomFrame = uiManager.getChatroomFrame();
-        chatroomFrame.addActionListener(this);
+        userFrame = uiManager.getUserFrame();
+        userFrame.addActionListener(this);
     }
 
     public void setClientMessageService(ClientMessageService clientMessageService) {
@@ -36,7 +39,7 @@ public class ChatroomFrontController implements ActionListener {
     }
 
     private void publicMessage() {
-        Message message = new Message(PUBLIC_MESSAGE, chatroomFrame.getText());
+        Message message = new Message(PUBLIC_MESSAGE, userFrame.getText());
         try {
             clientMessageService.send(message);
         } catch (IOException e) {

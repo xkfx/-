@@ -7,7 +7,6 @@ import chatroom.server.model.MessageService;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,17 +16,17 @@ public class MessageServiceImpl implements MessageService {
     private Map<Socket, Visitor> socketVisitorMap = new HashMap<>();
 
     @Override
-    public void addPublicMessageAcceptor(Socket socket, Visitor visitor) {
+    public void addAcceptor(Socket socket, Visitor visitor) {
         socketVisitorMap.put(socket, visitor);
     }
 
     @Override
-    public void deleteAcceptorBySocket(Socket socket) {
+    public void deleteAcceptor(Socket socket) {
         socketVisitorMap.remove(socket);
     }
 
     @Override
-    public void publicMessage(Socket socket, Message message) throws IOException {
+    public void sendAll(Socket socket, Message message) throws IOException {
         if (message.getType() == PUBLIC_MESSAGE) {
             StringBuilder messageBuilder = new StringBuilder();
             messageBuilder.append("【游客】"); // 身份
@@ -47,6 +46,5 @@ public class MessageServiceImpl implements MessageService {
         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         outputStream.writeObject(message);
         outputStream.flush();
-        System.out.println("消息" + message.getFlag() + "已经发出····");
     }
 }

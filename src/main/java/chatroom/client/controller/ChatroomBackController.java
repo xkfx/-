@@ -1,7 +1,7 @@
 package chatroom.client.controller;
 
 import chatroom.client.model.UIManager;
-import chatroom.client.ui.component.ChatroomFrame;
+import chatroom.client.ui.component.UserFrame;
 import chatroom.common.Message;
 
 import java.io.BufferedInputStream;
@@ -11,6 +11,9 @@ import java.net.Socket;
 
 import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 
+/**
+ * 后台控制器，监听来自服务端的消息，转换成模型更新。
+ */
 public class ChatroomBackController {
 
     private UIManager uiManager;
@@ -43,7 +46,7 @@ public class ChatroomBackController {
     }
 
     private void publicMessage(String str) {
-        ChatroomFrame chatroomFrame = uiManager.getChatroomFrame();
-        chatroomFrame.append(str);
+        UserFrame userFrame = uiManager.getUserFrame();
+        userFrame.append(str);
     }
 }
