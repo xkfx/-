@@ -1,11 +1,10 @@
 package chatroom.client.model;
 
-import chatroom.client.ui.component.ChatroomFrame;
+import chatroom.client.ui.component.UserFrame;
 import chatroom.client.ui.component.LoginFrame;
 import chatroom.client.ui.component.MessageDisplayPanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * 便于组件之间交互
@@ -33,7 +32,7 @@ public class UIManager {
 
     private LoginFrame loginFrame;
 
-    private ChatroomFrame chatroomFrame;
+    private UserFrame userFrame;
 
     /**
      * 创建一个登陆界面
@@ -48,11 +47,11 @@ public class UIManager {
         return loginFrame;
     }
 
-    public ChatroomFrame getChatroomFrame() {
-        if (chatroomFrame == null) {
-            chatroomFrame = new ChatroomFrame();
-            chatroomFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public UserFrame getUserFrame() {
+        if (userFrame == null) {
+            userFrame = new UserFrame();
+            userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
-        return chatroomFrame;
+        return userFrame;
     }
 }

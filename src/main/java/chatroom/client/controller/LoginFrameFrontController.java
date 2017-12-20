@@ -2,7 +2,7 @@ package chatroom.client.controller;
 
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
-import chatroom.client.ui.component.ChatroomFrame;
+import chatroom.client.ui.component.UserFrame;
 import chatroom.client.ui.component.LoginFrame;
 import chatroom.common.Message;
 import chatroom.common.VisitorLogin;
@@ -14,8 +14,7 @@ import java.io.IOException;
 import static chatroom.client.ui.enums.ButtonEnum.CONNECT_TO_SERVER;
 
 /**
- * 客户端控制器，将用户动作映射成对模型的调用。
- * 负责解析用户动作，调用 model ，包括主要的业务逻辑。
+ * 登陆界面的前端控制器，将用户动作映射成模型更新。
  */
 public class LoginFrameFrontController implements ActionListener {
 
@@ -59,16 +58,16 @@ public class LoginFrameFrontController implements ActionListener {
         if (result.getFlag()) {
             System.out.println("正在打开窗口······");
             loginFrame.dispose();
-            ChatroomFrame chatroomFrame = uiManager.getChatroomFrame();
-            chatroomFrame.setVisible(true);
+            UserFrame userFrame = uiManager.getUserFrame();
+            userFrame.setVisible(true);
 
             ChatroomFrontController frontController = new ChatroomFrontController();
-            chatroomFrame.append("前台控制器初始化完毕。\n");
+            userFrame.append("前台控制器初始化完毕。\n");
             ChatroomBackController backController = new ChatroomBackController();
-            chatroomFrame.append("后台控制器初始化完毕。\n");
+            userFrame.append("后台控制器初始化完毕。\n");
             backController.setUiManager(uiManager);
             backController.startup(clientMessageService.getSocket());
-            chatroomFrame.append("后台控制器启动完毕。\n");
+            userFrame.append("后台控制器启动完毕。\n");
             frontController.setUiManager(uiManager);
             frontController.setClientMessageService(clientMessageService);
         } else {

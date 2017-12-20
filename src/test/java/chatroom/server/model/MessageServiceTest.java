@@ -2,7 +2,7 @@ package chatroom.server.model;
 
 import chatroom.common.Message;
 import chatroom.server.model.impl.MessageServiceImpl;
-import org.junit.*;
+import org.junit.Test;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MessageServiceTest {
 
@@ -49,6 +49,6 @@ public class MessageServiceTest {
             e.printStackTrace();
         }
 
-        assertEquals("MESSAGE CAN'T BE SENT NORMALLY!", CONTENT_BE_SENT, result);
+        assertEquals("CONTENT CAN'T BE SENT NORMALLY!", CONTENT_BE_SENT, result);
     }
 }
