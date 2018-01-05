@@ -11,7 +11,7 @@ CREATE TABLE user(
   user_id BIGINT NOT NULL AUTO_INCREMENT COMMENT '用户id',
   username VARCHAR(40) NOT NULL COMMENT '用户名（邮箱）',
   password VARCHAR(40) NOT NULL COMMENT '密码',
-  nickname VARCHAR(20) NOT NULL COMMENT '昵称',
+  nickname VARCHAR(20) NOT NULL COMMENT '昵称' DEFAULT '游客318',
   other VARCHAR(120) COMMENT '其他',
   PRIMARY KEY (user_id)
 )ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='用户基本信息';
@@ -41,9 +41,9 @@ VALUES
   (1000, 1001),
   (1001, 1000);
 
--- 为什么手写 DDL ( Data Definition Language )
--- 记录每次上线的 DDL 修改
--- 上线 V 1.1
--- xxx
--- 上线 V 1.2
--- xxx x x
+-- V 1.1
+-- 原始
+
+-- V 1.2
+-- 给用户昵称添加默认值 游客318
+

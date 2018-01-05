@@ -2,9 +2,12 @@ package chatroom.server.controller;
 
 import chatroom.common.Message;
 import chatroom.common.VisitorLogin;
+import chatroom.server.dto.Register;
 import chatroom.server.entity.Visitor;
 import chatroom.server.model.MessageService;
+import chatroom.server.model.UserService;
 import chatroom.server.model.impl.MessageServiceImpl;
+import chatroom.server.model.impl.UserServiceImpl;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -17,6 +20,7 @@ import static chatroom.common.Iconst.VISITOR_ACCESS;
 
 public class ServerController {
     private MessageService messageService = new MessageServiceImpl();
+    private UserService userService = new UserServiceImpl();
 
     public void startup() {
         ServerSocket serverSocket = null;
@@ -59,6 +63,13 @@ public class ServerController {
                             Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) {
                                 messageService.sendAll(socket, message);
+                            }
+                            if (false) {
+                                String username = message.get("username");
+                                String password = message.get("password");
+                                Register reg = new Register(username, password);
+                                Message regMessage = userService.register(reg);
+                                messageService.send(socket, regMessage);
                             }
                         }
                     } else {

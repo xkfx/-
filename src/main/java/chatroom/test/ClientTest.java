@@ -6,7 +6,8 @@ import chatroom.client.ui.component.UserFrame;
 import javax.swing.*;
 import java.awt.*;
 
-public class ClientTest {
+public class
+ClientTest {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {

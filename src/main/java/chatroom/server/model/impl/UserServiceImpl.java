@@ -16,7 +16,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Message register(Register reg) {
-        return null;
+        User user = new User();
+        user.setUsername(reg.getUsername());
+        user.setPassword(reg.getPassword());
+        if (userDAO.saveUser(user)) {
+            return Message.ok("ok");
+        } else {
+            return Message.fail("fail");
+        }
     }
 
     @Override

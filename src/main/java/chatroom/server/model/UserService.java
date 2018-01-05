@@ -13,6 +13,4 @@ public interface UserService {
     Message logout();
 
     void sendPublicMessage();
-
-
 }
