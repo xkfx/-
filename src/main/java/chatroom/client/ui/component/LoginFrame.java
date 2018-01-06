@@ -13,6 +13,7 @@ public class LoginFrame extends JFrame {
     private JTextField textServerPort;
 
     private VisitorLoginPanel visitorLoginPanel;
+    private FormalUserLoginPanel formalUserLoginPanel;
 
     public LoginFrame() {
         setTitle("Little Pony v1.0");
@@ -33,7 +34,7 @@ public class LoginFrame extends JFrame {
         panelServerInfo.add(textServerPort);
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
-        FormalUserLoginPanel formalUserLoginPanel = new FormalUserLoginPanel();
+        formalUserLoginPanel = new FormalUserLoginPanel();
         visitorLoginPanel = new VisitorLoginPanel();
         tabbedPane.add("游客", visitorLoginPanel);
         tabbedPane.add("用户登陆", formalUserLoginPanel);
@@ -61,7 +62,16 @@ public class LoginFrame extends JFrame {
         return visitorLoginPanel.getNickname();
     }
 
+    public String getUsername() {
+        return formalUserLoginPanel.getUsername();
+    }
+
+    public String getPassword() {
+        return formalUserLoginPanel.getPassword();
+    }
+
     public void addActionListener(ActionListener listener) {
         visitorLoginPanel.addActionListener(listener);
+        formalUserLoginPanel.addActionListener(listener);
     }
 }

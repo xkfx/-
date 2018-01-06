@@ -41,6 +41,7 @@ public class UIManager {
         loginFrame = new LoginFrame();
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setVisible(true);
+        displayWarning("哎呦，不错哦~");
     }
 
     public LoginFrame getLoginFrame() {
@@ -53,5 +54,9 @@ public class UIManager {
             userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
         return userFrame;
+    }
+
+    public void displayWarning(String warning) {
+        JOptionPane.showMessageDialog(null, warning);
     }
 }

@@ -14,7 +14,7 @@ import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 /**
  * 后台控制器，监听来自服务端的消息，转换成模型更新。
  */
-public class ChatroomBackController {
+public class BackController {
 
     private UIManager uiManager;
 

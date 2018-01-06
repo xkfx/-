@@ -46,5 +46,6 @@ public class MessageServiceImpl implements MessageService {
         ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
         outputStream.writeObject(message);
         outputStream.flush();
+
     }
 }

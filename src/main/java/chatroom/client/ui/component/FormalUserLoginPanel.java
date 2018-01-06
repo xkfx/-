@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+import static chatroom.client.ui.enums.ButtonEnum.LOGIN;
+import static chatroom.client.ui.enums.ButtonEnum.REGISTER;
+
 public class FormalUserLoginPanel extends JPanel {
 
     private JButton buttonLogin;
@@ -30,8 +33,8 @@ public class FormalUserLoginPanel extends JPanel {
         panelInput.add(labelPassword);
         panelInput.add(textPassword);
 
-        buttonLogin = new JButton("登陆");
-        buttonRegister = new JButton("注册");
+        buttonLogin = new JButton(LOGIN.getExpression());
+        buttonRegister = new JButton(REGISTER.getExpression());
         buttonLogin.setFocusPainted(false);
         buttonRegister.setFocusPainted(false);
         JPanel panelButton = new JPanel();
@@ -44,7 +47,16 @@ public class FormalUserLoginPanel extends JPanel {
         add(panelButton, BorderLayout.SOUTH);
     }
 
-    public void addActionListener(ActionListener listener) {
+    public String getUsername() {
+        return textUsername.getText();
+    }
 
+    public String getPassword() {
+        return String.valueOf(textPassword.getPassword());
+    }
+
+    public void addActionListener(ActionListener listener) {
+        buttonLogin.addActionListener(listener);
+        buttonRegister.addActionListener(listener);
     }
 }

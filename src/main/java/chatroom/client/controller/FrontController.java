@@ -15,7 +15,7 @@ import static chatroom.common.Iconst.PUBLIC_MESSAGE;
 /**
  * 监听用户动作，转换成模型更新。
  */
-public class ChatroomFrontController implements ActionListener {
+public class FrontController implements ActionListener {
 
     private ClientMessageService clientMessageService;
 

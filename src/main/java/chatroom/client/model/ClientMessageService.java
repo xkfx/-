@@ -23,10 +23,6 @@ public class ClientMessageService {
 
     }
 
-    public ClientMessageService(UIManager UIManager) {
-        this.UIManager = UIManager;
-    }
-
     public void establishConnection(String host, int port) throws IOException {
         System.out.println("正在创建Socket······");
         socket = new Socket(host, port);
@@ -38,19 +34,29 @@ public class ClientMessageService {
         return socket;
     }
 
-    private boolean isFirstMessage = true;
-    public Message send(Message message) throws IOException, ClassNotFoundException {
+
+    /**
+     * 验证完用户身份后该方法不再用于接收消息，所有来自服务器的消息一律由后台控制器处理。
+     * @param message 代发消息
+     * @return 除第一次外，其余情况下均为空。
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void send(Message message) throws IOException, ClassNotFoundException {
+        outputStream.writeObject(message);
+        outputStream.flush();
+    }
+
+    public Message sendOnce(Message message) throws IOException, ClassNotFoundException {
         outputStream.writeObject(message);
         outputStream.flush();
         System.out.println("验证消息发送完毕······");
-        if (isFirstMessage) {
-            inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-            Message result = (Message) inputStream.readObject();
-            System.out.println("等待服务器响应验证······");
-            isFirstMessage = false;
-            return result;
-        }
-        return null;
+
+        inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+        Message result = (Message) inputStream.readObject();
+        System.out.println("等待服务器响应验证······");
+
+        return result;
     }
 
     public void disconnection() throws IOException {
