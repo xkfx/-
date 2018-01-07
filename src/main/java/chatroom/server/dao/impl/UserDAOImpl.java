@@ -7,6 +7,7 @@ import chatroom.common.entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private DBAccess dbAccess = new DBAccess();
@@ -67,14 +68,10 @@ public class UserDAOImpl implements UserDAO {
             prep = dbAccess.getConnection().prepareStatement(sql);
             prep.setString(1, username);
             result = prep.executeQuery();
-            if (result.next()) {
-                user = new User();
-                user.setUserId(result.getLong(1));
-                user.setUsername(result.getString(2));
-                user.setPassword(result.getString(3));
-                user.setNickname(result.getString(4));
-                user.setOther(result.getString(5));
-            }
+
+            user = new User();
+            setUserFields(result, user);
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -85,5 +82,47 @@ public class UserDAOImpl implements UserDAO {
             }
         }
         return user;
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        String sql = "select user_id, username, password, nickname, other from user where"
+                + " user_id=?";
+        PreparedStatement prep = null;
+        ResultSet result = null;
+        User user = null;
+        try {
+            prep = dbAccess.getConnection().prepareStatement(sql);
+            prep.setLong(1, userId);
+            result = prep.executeQuery();
+
+            user = new User();
+            setUserFields(result, user);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return user;
+    }
+
+    @Override
+    public List<User> getFriendsById(Long userId) {
+        return null;
+    }
+
+    private void setUserFields(ResultSet result, User user) throws SQLException {
+        if (result.next()) {
+            user.setUserId(result.getLong("user_id"));
+            user.setUsername(result.getString("username"));
+            user.setPassword(result.getString("password"));
+            user.setNickname(result.getString("nickname"));
+            user.setOther(result.getString("other"));
+        }
     }
 }

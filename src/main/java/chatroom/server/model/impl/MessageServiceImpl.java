@@ -14,6 +14,7 @@ import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
 
 public class MessageServiceImpl implements MessageService {
     private Map<Socket, Visitor> socketVisitorMap = new HashMap<>();
+    private Map<Socket, ObjectOutputStream> outputStreamMap = new HashMap<>();
 
     @Override
     public void addAcceptor(Socket socket, Visitor visitor) {
@@ -43,9 +44,28 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public void send(Socket socket, Message message) throws IOException {
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+        ObjectOutputStream outputStream = null;
+        if (outputStreamMap.get(socket) != null) {
+            outputStream = outputStreamMap.get(socket);
+        } else {
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStreamMap.put(socket, outputStream);
+        }
         outputStream.writeObject(message);
         outputStream.flush();
+    }
 
+    @Override
+    public void closeOutputStream(Socket socket) {
+        if (outputStreamMap.get(socket) != null) {
+            ObjectOutputStream outputStream = outputStreamMap.get(socket);
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                outputStreamMap.remove(socket);
+            }
+        }
     }
 }

@@ -49,8 +49,12 @@ public class UserServiceImpl implements UserService {
 
         User user = userDAO.getUserByUsername(username);
 
-        if (user != null && user.getPassword().equals(password)) {
+        if (user !=null && user.getPassword() != null
+                && user.getPassword().equals(password)) {
+
             socketUserMap.put(socketCode, user);
+            longUserMap.put(user.getUserId(), user);
+
             return Message.ok("");
         }
         return Message.fail("用户名或者密码错误");
@@ -62,7 +66,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUser(Long userId) {
+        return longUserMap.get(userId);
+    }
+
+    @Override
     public Message logout(int socketCode) {
+        if (getUser(socketCode) != null) {
+            longUserMap.remove(getUser(socketCode).getUserId());
+        }
         socketUserMap.remove(socketCode);
         return null;
     }

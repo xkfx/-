@@ -13,6 +13,8 @@ public interface UserService {
 
     User getUser(int socketCode);
 
+    User getUser(Long userId);
+
     Message logout(int socketCode);
 
     void sendPublicMessage();

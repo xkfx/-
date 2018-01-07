@@ -83,4 +83,8 @@ public class ClientMessageService {
             outputStream.flush();
         }
     }
+
+    public ObjectInputStream getInputStream() {
+        return inputStream;
+    }
 }

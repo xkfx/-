@@ -26,10 +26,13 @@ public class UserDAOTest {
     }
 
     @Test
-    public void getUserByUsername() {
+    public void getUser() {
+
         User user = userDAO.getUserByUsername(username);
         userId = user.getUserId();
+        assertEquals(PASSWORD, user.getPassword());
 
+        user = userDAO.getUserById(userId);
         assertEquals(PASSWORD, user.getPassword());
     }
 

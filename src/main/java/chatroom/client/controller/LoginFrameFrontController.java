@@ -74,6 +74,7 @@ public class LoginFrameFrontController implements ActionListener {
         BackController backController = new BackController();
         userFrame.append("后台控制器初始化完毕。\n");
         backController.setUiManager(uiManager);
+        backController.setClientMessageService(clientMessageService);
         backController.startup(clientMessageService.getSocket());
         userFrame.append("后台控制器启动完毕。\n");
 

@@ -2,6 +2,8 @@ package chatroom.server.dao;
 
 import chatroom.common.entity.User;
 
+import java.util.List;
+
 public interface UserDAO {
     /**
      * 添加用户（用户注册）
@@ -23,4 +25,8 @@ public interface UserDAO {
      * @return 存在则返回该对象，否则返回 null
      */
     User getUserByUsername(String username);
+
+    User getUserById(Long userId);
+
+    List<User> getFriendsById(Long userId);
 }

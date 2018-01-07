@@ -7,6 +7,7 @@ import java.util.Map;
 public class Message implements Serializable {
     private int type;
     private boolean flag;
+    private Long target;
     private String content;
     private Map<String, String> cookie = new HashMap<>();
 
@@ -66,5 +67,13 @@ public class Message implements Serializable {
 
     public String get(String key) {
         return cookie.get(key);
+    }
+
+    public Long getTarget() {
+        return target;
+    }
+
+    public void setTarget(Long target) {
+        this.target = target;
     }
 }

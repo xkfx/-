@@ -1,5 +1,6 @@
 package chatroom.client.controller;
 
+import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
 import chatroom.client.ui.component.UserFrame;
 import chatroom.common.message.Message;
@@ -19,7 +20,13 @@ import static chatroom.common.message.Iconst.USER_PROFILE;
  */
 public class BackController {
 
+    private ClientMessageService clientMessageService;
+
     private UIManager uiManager;
+
+    public void setClientMessageService(ClientMessageService clientMessageService) {
+        this.clientMessageService = clientMessageService;
+    }
 
     public void setUiManager(UIManager manager) {
         uiManager = manager;
@@ -33,7 +40,7 @@ public class BackController {
                 try {
                     while (true) {
                         try {
-                            inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+                            inputStream = clientMessageService.getInputStream();
                             Object object = inputStream.readObject();
                             Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) publicMessage(message.getContent());

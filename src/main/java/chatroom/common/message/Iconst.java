@@ -9,4 +9,5 @@ public interface Iconst {
     int GENERAL_LOGIN = 2;
     int GENERAL_REGISTER = 3;
     int USER_PROFILE = 4;
+    int PERSONAL_MESSAGE = 5;
 }

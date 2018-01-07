@@ -2,9 +2,11 @@ package chatroom.common.message;
 
 import chatroom.common.entity.User;
 
+import java.io.Serializable;
+
 import static chatroom.common.message.Iconst.USER_PROFILE;
 
-public class MsgProfile extends Message {
+public class MsgProfile extends Message implements Serializable {
 
     private User user;
 

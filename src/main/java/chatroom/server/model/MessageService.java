@@ -39,4 +39,6 @@ public interface MessageService {
      * @throws IOException
      */
     void send(Socket socket, Message message) throws IOException;
+
+    void closeOutputStream(Socket socket);
 }

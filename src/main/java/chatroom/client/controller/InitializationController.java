@@ -7,7 +7,7 @@ public class InitializationController {
     public static void main(String[] args) {
         UIManager uiManager = new UIManager();
         uiManager.init();
-        System.out.println(Thread.currentThread().getName());
+
         LoginFrameFrontController frontController = new LoginFrameFrontController();
         frontController.setUiManager(uiManager);
     }

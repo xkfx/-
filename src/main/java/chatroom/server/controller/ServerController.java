@@ -59,6 +59,9 @@ public class ServerController {
             if (message.getType() == PUBLIC_MESSAGE) {
                 messageService.sendAll(socket, message);
             }
+            if (message.getType() == PERSONAL_MESSAGE) {
+
+            }
         }
     }
 
@@ -127,9 +130,8 @@ public class ServerController {
 
                         messageService.send(socket, firstResponse);
 
-                        // 后续动作: 个人信息， 好友列表/状态， 缓存消息
+                        // 初始化信息: 个人信息， 好友列表/状态， 缓存消息
                         if (firstResponse.getFlag()) {
-                            System.out.println("用户个人信息即将发出");
                             User user = userService.getUser(socket.hashCode());
                             messageService.send(socket, new MsgProfile(user));
                             System.out.println("用户个人信息已经发出" + user);
@@ -142,12 +144,14 @@ public class ServerController {
 
                 } catch (ClassNotFoundException notFoundException) {
                     messageService.deleteAcceptor(socket);
+                    messageService.closeOutputStream(socket);
                     userService.logout(socket.hashCode());
-                    System.out.println(socket.hashCode() + "已正常下线。ClassNotFound");
+                    System.out.println(socket.hashCode() + "已正常下线。ClassNotFound\n");
                 } catch (IOException ioException) {
                     messageService.deleteAcceptor(socket);
+                    messageService.closeOutputStream(socket);
                     userService.logout(socket.hashCode());
-                    System.out.println(socket.hashCode() + "已正常下线。IOException");
+                    System.out.println(socket.hashCode() + "已正常下线。IOException\n");
                 } finally {
                     try {
                         if (inputStream != null) {
