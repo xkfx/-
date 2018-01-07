@@ -1,8 +1,9 @@
-package chatroom.server.entity;
+package chatroom.common.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
     private Long userId;
 
@@ -69,6 +70,6 @@ public class User {
 
     @Override
     public String toString() {
-        return super.toString();
+        return userId + "%" + username + "%" + password + "%" + nickname + "%" + other;
     }
 }

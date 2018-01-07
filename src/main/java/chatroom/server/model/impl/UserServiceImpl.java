@@ -1,15 +1,26 @@
 package chatroom.server.model.impl;
 
-import chatroom.common.Message;
+import chatroom.common.message.Message;
 import chatroom.server.dao.UserDAO;
 import chatroom.server.dao.impl.UserDAOImpl;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
-import chatroom.server.entity.User;
+import chatroom.common.entity.User;
 import chatroom.server.model.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
     private UserDAO userDAO = new UserDAOImpl();
+    /**
+     * 对外映射，根据 socket 找用户资料
+     */
+    private Map<Integer, User> socketUserMap = new HashMap<>();
+    /**
+     * 内部映射，查找好友
+     */
+    private Map<Long, User> longUserMap = new HashMap<>();
 
     public UserServiceImpl() {
 
@@ -32,20 +43,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Message login(Login login) {
+    public Message login(int socketCode, Login login) {
         String username = login.getUsername();
         String password = login.getPassword();
 
         User user = userDAO.getUserByUsername(username);
 
         if (user != null && user.getPassword().equals(password)) {
+            socketUserMap.put(socketCode, user);
             return Message.ok("");
         }
         return Message.fail("用户名或者密码错误");
     }
 
     @Override
-    public Message logout() {
+    public User getUser(int socketCode) {
+        return socketUserMap.get(socketCode);
+    }
+
+    @Override
+    public Message logout(int socketCode) {
+        socketUserMap.remove(socketCode);
         return null;
     }
 

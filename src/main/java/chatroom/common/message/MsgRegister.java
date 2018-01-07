@@ -1,6 +1,6 @@
-package chatroom.common;
+package chatroom.common.message;
 
-import static chatroom.common.Iconst.GENERAL_REGISTER;
+import static chatroom.common.message.Iconst.GENERAL_REGISTER;
 
 public class MsgRegister extends Message {
 

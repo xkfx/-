@@ -33,13 +33,18 @@ INSERT INTO
   user(username, password, nickname, other)
 VALUES
   ('11122@gmail.com', '123456', '老大', '这人很懒，啥也没写'),
-  ('jhgm49@163.com', '123456', '老二', '平平淡淡才是真');
+  ('jhgm49@163.com', '123456', '老二', '平平淡淡才是真'),
+  ('123', '123', '老三', '无');
 
 INSERT INTO
   friend_relation(user_id, friend_id)
 VALUES
   (1000, 1001),
-  (1001, 1000);
+  (1001, 1000),
+  (1002, 1000),
+  (1002, 1001),
+  (1000, 1002),
+  (1001, 1002);
 
 -- V 1.1
 -- 原始

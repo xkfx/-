@@ -2,14 +2,17 @@ package chatroom.client.controller;
 
 import chatroom.client.model.UIManager;
 import chatroom.client.ui.component.UserFrame;
-import chatroom.common.Message;
+import chatroom.common.message.Message;
+import chatroom.common.message.MsgProfile;
+import chatroom.common.entity.User;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-import static chatroom.common.Iconst.PUBLIC_MESSAGE;
+import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
+import static chatroom.common.message.Iconst.USER_PROFILE;
 
 /**
  * 后台控制器，监听来自服务端的消息，转换成模型更新。
@@ -34,6 +37,9 @@ public class BackController {
                             Object object = inputStream.readObject();
                             Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) publicMessage(message.getContent());
+                            if (message.getType() == USER_PROFILE) {
+                                updateProfile(message);
+                            }
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -48,5 +54,13 @@ public class BackController {
     private void publicMessage(String str) {
         UserFrame userFrame = uiManager.getUserFrame();
         userFrame.append(str);
+    }
+
+    private void updateProfile(Message message) {
+        System.out.println("用户个人信息已经接收");
+
+        MsgProfile msgProfile = (MsgProfile) message;
+        User user = msgProfile.getUser();
+        uiManager.displayWarning(user.toString());
     }
 }

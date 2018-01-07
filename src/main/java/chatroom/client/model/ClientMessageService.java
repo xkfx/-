@@ -1,16 +1,14 @@
 package chatroom.client.model;
 
-import chatroom.common.Message;
-import chatroom.client.model.UIManager;
+import chatroom.common.message.Message;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Date;
 
-import static chatroom.common.Iconst.PUBLIC_MESSAGE;
+import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
 
 public class ClientMessageService {
     private Socket socket;

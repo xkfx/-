@@ -3,14 +3,14 @@ package chatroom.client.controller;
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
 import chatroom.client.ui.component.UserFrame;
-import chatroom.common.Message;
+import chatroom.common.message.Message;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import static chatroom.client.ui.enums.ButtonEnum.SEND;
-import static chatroom.common.Iconst.PUBLIC_MESSAGE;
+import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
 
 /**
  * 监听用户动作，转换成模型更新。

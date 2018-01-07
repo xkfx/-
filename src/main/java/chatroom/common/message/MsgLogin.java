@@ -1,6 +1,6 @@
-package chatroom.common;
+package chatroom.common.message;
 
-import static chatroom.common.Iconst.GENERAL_LOGIN;
+import static chatroom.common.message.Iconst.GENERAL_LOGIN;
 
 public class MsgLogin extends Message {
 

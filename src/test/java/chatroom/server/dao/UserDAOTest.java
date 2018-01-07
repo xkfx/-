@@ -1,7 +1,7 @@
 package chatroom.server.dao;
 
 import chatroom.server.dao.impl.UserDAOImpl;
-import chatroom.server.entity.User;
+import chatroom.common.entity.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

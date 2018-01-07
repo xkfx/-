@@ -2,9 +2,8 @@ package chatroom.server.dao.impl;
 
 import chatroom.server.dao.UserDAO;
 import chatroom.server.db.DBAccess;
-import chatroom.server.entity.User;
+import chatroom.common.entity.User;
 
-import javax.xml.transform.Result;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

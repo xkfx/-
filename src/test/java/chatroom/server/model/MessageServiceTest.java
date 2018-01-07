@@ -1,6 +1,6 @@
 package chatroom.server.model;
 
-import chatroom.common.Message;
+import chatroom.common.message.Message;
 import chatroom.server.model.impl.MessageServiceImpl;
 import org.junit.Test;
 

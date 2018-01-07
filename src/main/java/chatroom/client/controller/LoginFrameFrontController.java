@@ -4,10 +4,10 @@ import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
 import chatroom.client.ui.component.UserFrame;
 import chatroom.client.ui.component.LoginFrame;
-import chatroom.common.Message;
-import chatroom.common.MsgLogin;
-import chatroom.common.MsgRegister;
-import chatroom.common.VisitorLogin;
+import chatroom.common.message.Message;
+import chatroom.common.message.MsgLogin;
+import chatroom.common.message.MsgRegister;
+import chatroom.common.message.VisitorLogin;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,15 +66,18 @@ public class LoginFrameFrontController implements ActionListener {
         UserFrame userFrame = uiManager.getUserFrame();
         userFrame.setVisible(true);
 
+        System.out.println("正在打开窗口2······");
         FrontController frontController = new FrontController();
         userFrame.append("前台控制器初始化完毕。\n");
 
+        System.out.println("正在打开窗口3······");
         BackController backController = new BackController();
         userFrame.append("后台控制器初始化完毕。\n");
         backController.setUiManager(uiManager);
         backController.startup(clientMessageService.getSocket());
         userFrame.append("后台控制器启动完毕。\n");
 
+        System.out.println("正在打开窗口4······");
         frontController.setUiManager(uiManager);
         frontController.setClientMessageService(clientMessageService);
     }
@@ -126,7 +129,6 @@ public class LoginFrameFrontController implements ActionListener {
         Message message = new VisitorLogin(nickname);
         Message result = sendFirstMsg(serverIp, serverPort, message);
         if (result.getFlag()) {
-            System.out.println("正在打开窗口······");
             loginFrame.dispose();
             initMainFrame();
         } else {

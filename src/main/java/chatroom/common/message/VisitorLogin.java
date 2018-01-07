@@ -1,6 +1,6 @@
-package chatroom.common;
+package chatroom.common.message;
 
-import static chatroom.common.Iconst.VISITOR_ACCESS;
+import static chatroom.common.message.Iconst.VISITOR_ACCESS;
 
 public class VisitorLogin extends Message {
 

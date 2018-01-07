@@ -1,16 +1,19 @@
 package chatroom.server.model;
 
-import chatroom.common.Message;
+import chatroom.common.message.Message;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
+import chatroom.common.entity.User;
 
 public interface UserService {
 
     Message register(Register reg);
 
-    Message login(Login login);
+    Message login(int socketCode, Login login);
 
-    Message logout();
+    User getUser(int socketCode);
+
+    Message logout(int socketCode);
 
     void sendPublicMessage();
 }

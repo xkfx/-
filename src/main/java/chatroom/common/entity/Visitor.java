@@ -1,4 +1,4 @@
-package chatroom.server.entity;
+package chatroom.common.entity;
 
 public class Visitor {
 

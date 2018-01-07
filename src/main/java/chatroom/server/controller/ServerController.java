@@ -1,12 +1,10 @@
 package chatroom.server.controller;
 
-import chatroom.common.Message;
-import chatroom.common.MsgLogin;
-import chatroom.common.MsgRegister;
-import chatroom.common.VisitorLogin;
+import chatroom.common.entity.User;
+import chatroom.common.message.*;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
-import chatroom.server.entity.Visitor;
+import chatroom.common.entity.Visitor;
 import chatroom.server.model.MessageService;
 import chatroom.server.model.UserService;
 import chatroom.server.model.impl.MessageServiceImpl;
@@ -18,7 +16,7 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static chatroom.common.Iconst.*;
+import static chatroom.common.message.Iconst.*;
 
 public class ServerController {
     /**
@@ -125,22 +123,30 @@ public class ServerController {
                         System.out.println(username + "&" + password + "准备登陆");
 
                         Login login = new Login(username, password);
-                        firstResponse = userService.login(login);
+                        firstResponse = userService.login(socket.hashCode(), login);
 
                         messageService.send(socket, firstResponse);
 
                         // 后续动作: 个人信息， 好友列表/状态， 缓存消息
-                        continuedResponse(inputStream, socket);
+                        if (firstResponse.getFlag()) {
+                            System.out.println("用户个人信息即将发出");
+                            User user = userService.getUser(socket.hashCode());
+                            messageService.send(socket, new MsgProfile(user));
+                            System.out.println("用户个人信息已经发出" + user);
 
+                            continuedResponse(inputStream, socket);
+                        }
                     }
 
                     throw new IOException();
 
                 } catch (ClassNotFoundException notFoundException) {
                     messageService.deleteAcceptor(socket);
+                    userService.logout(socket.hashCode());
                     System.out.println(socket.hashCode() + "已正常下线。ClassNotFound");
                 } catch (IOException ioException) {
                     messageService.deleteAcceptor(socket);
+                    userService.logout(socket.hashCode());
                     System.out.println(socket.hashCode() + "已正常下线。IOException");
                 } finally {
                     try {

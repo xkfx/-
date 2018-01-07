@@ -1,7 +1,7 @@
 package chatroom.server.model.impl;
 
-import chatroom.common.Message;
-import chatroom.server.entity.Visitor;
+import chatroom.common.message.Message;
+import chatroom.common.entity.Visitor;
 import chatroom.server.model.MessageService;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chatroom.common.Iconst.PUBLIC_MESSAGE;
+import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
 
 public class MessageServiceImpl implements MessageService {
     private Map<Socket, Visitor> socketVisitorMap = new HashMap<>();
