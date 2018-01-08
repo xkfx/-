@@ -17,4 +17,8 @@ public class MessagePanel extends JPanel {
         add(messageDisplayPanel, BorderLayout.CENTER);
         add(messageEditPanel, BorderLayout.SOUTH);
     }
+
+    public String getContent() {
+        return messageEditPanel.getText();
+    }
 }

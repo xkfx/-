@@ -63,18 +63,6 @@ public class ClientMessageService {
         socket.close();
     }
 
-    public void doResponse() throws IOException, ClassNotFoundException {
-        if (socket != null && !socket.isClosed()) {
-            // 接收消息
-            Object object = inputStream.readObject();
-            Message message = (Message) object;
-            // 响应消息
-            if (UIManager != null && message.getType() == PUBLIC_MESSAGE) {
-                UIManager.getChatBox().append(message.getContent() + "\n");
-            }
-        }
-    }
-
     public void sendPublicMessage(String text) throws IOException {
         if (socket != null) {
             Message message = new Message(PUBLIC_MESSAGE, socket.getInetAddress() + ": " + text);

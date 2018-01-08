@@ -68,6 +68,8 @@ public class BackController {
 
         MsgProfile msgProfile = (MsgProfile) message;
         User user = msgProfile.getUser();
+        // 实际上是传递给前端控制器
+        uiManager.setSource(user.getUserId());
         uiManager.displayWarning(user.toString());
     }
 }
