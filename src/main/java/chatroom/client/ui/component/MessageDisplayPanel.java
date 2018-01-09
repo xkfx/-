@@ -18,6 +18,7 @@ public class MessageDisplayPanel extends JPanel {
      */
     public MessageDisplayPanel(int rows, int columns) {
         textArea = new JTextArea(rows, columns);
+        textArea.setFont(new Font("楷体", 0, 25));
         scrollPane = new JScrollPane(textArea);
         textArea.setLineWrap(true);
         textArea.setEditable(false);

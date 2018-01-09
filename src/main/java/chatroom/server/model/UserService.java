@@ -5,17 +5,21 @@ import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
 import chatroom.common.entity.User;
 
+import java.net.Socket;
+
 public interface UserService {
 
     Message register(Register reg);
 
-    Message login(int socketCode, Login login);
+    Message login(Socket socket, Login login);
 
-    User getUser(int socketCode);
+    User getUser(Socket socket);
 
     User getUser(Long userId);
 
-    Message logout(int socketCode);
+    Socket getSocket(Long userId);
+
+    Message logout(Socket socket);
 
     void sendPublicMessage();
 }

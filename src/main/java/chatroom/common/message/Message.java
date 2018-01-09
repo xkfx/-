@@ -86,4 +86,13 @@ public class Message implements Serializable {
     public void setSource(Long source) {
         this.source = source;
     }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "content='" + content + '\'' +
+                ", source=" + source +
+                ", target=" + target +
+                '}';
+    }
 }

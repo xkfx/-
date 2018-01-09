@@ -8,6 +8,7 @@ import chatroom.server.dto.Register;
 import chatroom.common.entity.User;
 import chatroom.server.model.UserService;
 
+import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,11 +17,15 @@ public class UserServiceImpl implements UserService {
     /**
      * 对外映射，根据 socket 找用户资料
      */
-    private Map<Integer, User> socketUserMap = new HashMap<>();
+    private Map<Socket, User> socketUserMap = new HashMap<>();
     /**
      * 内部映射，查找好友
      */
     private Map<Long, User> longUserMap = new HashMap<>();
+    /**
+     * 对外，根据 id 找 socket
+     */
+    private Map<Long, Socket> longSocketMap = new HashMap<>();
 
     public UserServiceImpl() {
 
@@ -43,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Message login(int socketCode, Login login) {
+    public Message login(Socket socket, Login login) {
         String username = login.getUsername();
         String password = login.getPassword();
 
@@ -52,7 +57,8 @@ public class UserServiceImpl implements UserService {
         if (user !=null && user.getPassword() != null
                 && user.getPassword().equals(password)) {
 
-            socketUserMap.put(socketCode, user);
+            socketUserMap.put(socket, user);
+            longSocketMap.put(user.getUserId(), socket);
             longUserMap.put(user.getUserId(), user);
 
             return Message.ok("");
@@ -61,8 +67,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(int socketCode) {
-        return socketUserMap.get(socketCode);
+    public User getUser(Socket socket) {
+        return socketUserMap.get(socket);
     }
 
     @Override
@@ -71,11 +77,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Message logout(int socketCode) {
-        if (getUser(socketCode) != null) {
-            longUserMap.remove(getUser(socketCode).getUserId());
+    public Socket getSocket(Long userId) {
+        return longSocketMap.get(userId);
+    }
+
+    @Override
+    public Message logout(Socket socket) {
+        User user = null;
+        if (getUser(socket) != null) {
+            user = getUser(socket);
+            longUserMap.remove(user.getUserId());
+            socketUserMap.remove(user.getUserId());
         }
-        socketUserMap.remove(socketCode);
+        socketUserMap.remove(socket);
         return null;
     }
 

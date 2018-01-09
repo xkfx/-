@@ -2,6 +2,7 @@ package chatroom.client.controller;
 
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
+import chatroom.client.ui.component.MessageFrame;
 import chatroom.client.ui.component.MessagePanel;
 import chatroom.client.ui.component.UserFrame;
 import chatroom.common.message.Message;
@@ -48,10 +49,10 @@ public class FrontController implements ActionListener {
     }
 
     private void privateMessage() {
-        System.out.println("发送一条私人消息");
-        MessagePanel messagePanel = uiManager.getMessagePanel(1002L);
+        MessageFrame messageFrame = uiManager.getMessageFrame(1002L);
         Long source = uiManager.getSource();
-        String content = messagePanel.getContent();
+        String content = messageFrame.getContent();
+        System.out.println("发送一条私人消息" + source + "%" + content + "%" + 1002L);
 
         Message message = new Message(PERSONAL_MESSAGE, content);
         message.setSource(source);

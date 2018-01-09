@@ -1,10 +1,7 @@
 package chatroom.client.model;
 
 import chatroom.client.controller.FrontController;
-import chatroom.client.ui.component.MessagePanel;
-import chatroom.client.ui.component.UserFrame;
-import chatroom.client.ui.component.LoginFrame;
-import chatroom.client.ui.component.MessageDisplayPanel;
+import chatroom.client.ui.component.*;
 
 import javax.swing.*;
 import java.util.HashMap;
@@ -33,7 +30,7 @@ public class UIManager {
 
     private Long source;
 
-    private Map<Long, MessagePanel> targetPanelMap = new HashMap<>();
+    private Map<Long, MessageFrame> targetPanelMap = new HashMap<>();
 
     /**
      * 创建一个登陆界面
@@ -42,7 +39,6 @@ public class UIManager {
         loginFrame = new LoginFrame();
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setVisible(true);
-        displayWarning("哎呦，不错哦~");
     }
 
     public LoginFrame getLoginFrame() {
@@ -65,22 +61,19 @@ public class UIManager {
         return source;
     }
 
-    public MessagePanel getMessagePanel(Long target) {
-        MessagePanel messagePanel = null;
+    public MessageFrame getMessageFrame(Long target) {
+        MessageFrame messageFrame = null;
         if (targetPanelMap.get(target) != null) {
-            messagePanel = targetPanelMap.get(target);
+            messageFrame = targetPanelMap.get(target);
         } else {
-            messagePanel = new MessagePanel(30, 30);
-            targetPanelMap.put(target, messagePanel);
+            messageFrame = new MessageFrame();
+            messageFrame.addActionListener(frontController);
+            targetPanelMap.put(target, messageFrame);
         }
-        return messagePanel;
+        return messageFrame;
     }
 
-    private static boolean test = true;
     public void displayWarning(String warning) {
-        if (test) {
-            test = false;
-        }
         JOptionPane.showMessageDialog(null, warning);
     }
 }

@@ -34,7 +34,7 @@ public class ServerController {
     public void startup() {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(10001);
+            serverSocket = new ServerSocket(10000);
             System.out.println("服务器正在监听 10001 端口 ...");
             while (true) {
                 serve(serverSocket.accept());
@@ -60,7 +60,16 @@ public class ServerController {
                 messageService.sendAll(socket, message);
             }
             if (message.getType() == PERSONAL_MESSAGE) {
-
+                System.out.println(message);
+                // 分两种情况：对方在线和对方不再线
+                Long target = message.getTarget();
+                if (userService.getSocket(target) != null) {
+                    // 在线转发
+                    Socket targetSocket = userService.getSocket(target);
+                    messageService.send(targetSocket, message);
+                } else {
+                    // 不在线缓存消息
+                }
             }
         }
     }
@@ -126,13 +135,13 @@ public class ServerController {
                         System.out.println(username + "&" + password + "准备登陆");
 
                         Login login = new Login(username, password);
-                        firstResponse = userService.login(socket.hashCode(), login);
+                        firstResponse = userService.login(socket, login);
 
                         messageService.send(socket, firstResponse);
 
                         // 初始化信息: 个人信息， 好友列表/状态， 缓存消息
                         if (firstResponse.getFlag()) {
-                            User user = userService.getUser(socket.hashCode());
+                            User user = userService.getUser(socket);
                             messageService.send(socket, new MsgProfile(user));
                             System.out.println("用户个人信息已经发出" + user);
 
@@ -145,12 +154,12 @@ public class ServerController {
                 } catch (ClassNotFoundException notFoundException) {
                     messageService.deleteAcceptor(socket);
                     messageService.closeOutputStream(socket);
-                    userService.logout(socket.hashCode());
+                    userService.logout(socket);
                     System.out.println(socket.hashCode() + "已正常下线。ClassNotFound\n");
                 } catch (IOException ioException) {
                     messageService.deleteAcceptor(socket);
                     messageService.closeOutputStream(socket);
-                    userService.logout(socket.hashCode());
+                    userService.logout(socket);
                     System.out.println(socket.hashCode() + "已正常下线。IOException\n");
                 } finally {
                     try {

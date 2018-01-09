@@ -22,8 +22,9 @@ public class UserFrame extends JFrame {
      */
     public UserFrame() {
         // 设置窗体
-        setTitle("Little Pony v1.0");
-        setSize(800, 700);
+        setTitle("SmallTalk");
+        setSize(700, 750);
+        setResizable(false);
         setLocationRelativeTo(null);
 
          // 配置组件
@@ -45,7 +46,7 @@ public class UserFrame extends JFrame {
 
         // 布局
         setLayout(new BorderLayout());
-        add(menuBar, BorderLayout.NORTH);
+        // add(menuBar, BorderLayout.NORTH);
         add(friendPanel, BorderLayout.CENTER);
         // add(mainPanel, BorderLayout.EAST);
     }

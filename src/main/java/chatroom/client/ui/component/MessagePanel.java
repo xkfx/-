@@ -2,6 +2,7 @@ package chatroom.client.ui.component;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MessagePanel extends JPanel {
 
@@ -20,5 +21,9 @@ public class MessagePanel extends JPanel {
 
     public String getContent() {
         return messageEditPanel.getText();
+    }
+
+    public void addActionListener(ActionListener listener) {
+        messageEditPanel.addActionListener(listener);
     }
 }

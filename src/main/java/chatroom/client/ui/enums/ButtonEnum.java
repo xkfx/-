@@ -6,8 +6,8 @@ package chatroom.client.ui.enums;
 public enum ButtonEnum {
 
     CONNECT_TO_SERVER(0, "连接服务器"),
-    SEND(1, "发送(S)"),
-    CLOESE(2, "关闭(C)"),
+    SEND(1, "发送"),
+    CLOESE(2, "关闭"),
     TEXT_STYLE(3, "字体"),
     LOGIN(4, "登陆"),
     REGISTER(5, "注册");

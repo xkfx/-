@@ -16,11 +16,11 @@ public class FriendPanel extends JPanel {
         friendList.add(tabbedPane);
         // 右
         JPanel friendInformation = new JPanel();
-        MessagePanel displayPanel_2 = new MessagePanel(29, 45);
+        MessagePanel displayPanel_2 = new MessagePanel(15, 45);
         friendInformation.add(displayPanel_2);
 
         setLayout(new BorderLayout());
-        add(friendList, BorderLayout.WEST);
+        // add(friendList, BorderLayout.WEST);
         add(friendInformation, BorderLayout.CENTER);
     }
 }

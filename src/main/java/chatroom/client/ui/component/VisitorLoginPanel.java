@@ -14,13 +14,13 @@ public class VisitorLoginPanel extends JPanel {
 
     public VisitorLoginPanel() {
         // 创建组件
-        JLabel labelName = new JLabel(LabelEunm.NICKNAME.getExpression());
+        JLabel labelName = new JLabel(LabelEunm.NICKNAME.getExpression(), JLabel.CENTER);
         textNickname = new JTextField();
         // 设置组件
-        textNickname.setText("撒旦阿斯顿");
-        labelName.setFont(new Font("", 0, 25));
+        textNickname.setText("逍遥の一生");
+        labelName.setFont(new Font("楷体", 0, 25));
         textNickname.setFont(new Font("", 0, 25));
-        // 布局
+          // 布局
         JPanel panelInput = new JPanel();
         panelInput.setLayout(new GridLayout(1, 2));
         panelInput.add(labelName);
@@ -28,6 +28,7 @@ public class VisitorLoginPanel extends JPanel {
 
         buttonLogin = new JButton(ButtonEnum.CONNECT_TO_SERVER.getExpression());
         buttonLogin.setFocusPainted(false);
+        buttonLogin.setFont(new Font("楷体", 0, 25));
         JPanel panelButton = new JPanel();
         panelButton.setLayout(new FlowLayout());
         panelButton.add(buttonLogin);

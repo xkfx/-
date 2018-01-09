@@ -31,19 +31,22 @@ public class MessageEditPanel extends JPanel {
 
     public MessageEditPanel() {
         buttonSend.setFocusPainted(false);
+        buttonSend.setFont(new Font("楷体", 0, 25));
         buttonClose.setFocusPainted(false);
+        buttonClose.setFont(new Font("楷体", 0, 25));
         inputArea.setLineWrap(true);
+        inputArea.setFont(new Font("楷体", 0, 25));
         JScrollPane jScrollPane = new JScrollPane(inputArea);
         setLayout(new BorderLayout());
 
         JPanel panFunction = new JPanel();
         panFunction.setLayout(new FlowLayout(FlowLayout.LEFT));
         panFunction.add(buttonTest);
-        panFunction.add(buttonTest2);
+        // panFunction.add(buttonTest2);
 
         JPanel panRight = new JPanel();
         panRight.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        panRight.add(buttonTest3);
+        // panRight.add(buttonTest3);
 
         JPanel panMenu = new JPanel();
         panMenu.setLayout(new GridLayout(1, 2));

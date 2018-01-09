@@ -2,6 +2,8 @@ package chatroom.client.controller;
 
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
+import chatroom.client.ui.component.MessageFrame;
+import chatroom.client.ui.component.MessagePanel;
 import chatroom.client.ui.component.UserFrame;
 import chatroom.common.message.Message;
 import chatroom.common.message.MsgProfile;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
+import static chatroom.common.message.Iconst.PERSONAL_MESSAGE;
 import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
 import static chatroom.common.message.Iconst.USER_PROFILE;
 
@@ -43,9 +46,14 @@ public class BackController {
                             inputStream = clientMessageService.getInputStream();
                             Object object = inputStream.readObject();
                             Message message = (Message) object;
-                            if (message.getType() == PUBLIC_MESSAGE) publicMessage(message.getContent());
+                            if (message.getType() == PUBLIC_MESSAGE) {
+                                publicMessage(message.getContent());
+                            }
                             if (message.getType() == USER_PROFILE) {
                                 updateProfile(message);
+                            }
+                            if (message.getType() == PERSONAL_MESSAGE) {
+                                uiManager.displayWarning(message.toString());
                             }
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
@@ -71,5 +79,8 @@ public class BackController {
         // 实际上是传递给前端控制器
         uiManager.setSource(user.getUserId());
         uiManager.displayWarning(user.toString());
+
+        MessageFrame messageFrame = uiManager.getMessageFrame(1002L);
+        messageFrame.setVisible(true);
     }
 }

@@ -16,15 +16,19 @@ public class LoginFrame extends JFrame {
     private FormalUserLoginPanel formalUserLoginPanel;
 
     public LoginFrame() {
-        setTitle("Little Pony v1.0");
-        setSize(430, 420);
+        setTitle("SmallTalk");
+        setSize(540, 270);
         setResizable(false);
         setLocationRelativeTo(null);
 
         JLabel labelIp = new JLabel("服务器IP：", JLabel.CENTER);
+        labelIp.setFont(new Font("楷体", 0, 25));
         JLabel labelPort = new JLabel("端口号：", JLabel.CENTER);
+        labelPort.setFont(new Font("楷体", 0, 25));
         textServerIp = new JTextField("127.0.0.1");
-        textServerPort = new JTextField("10001");
+        textServerIp.setFont(new Font("楷体", 0, 25));
+        textServerPort = new JTextField("10000");
+        textServerPort.setFont(new Font("", 0, 25));
 
         JPanel panelServerInfo = new JPanel();
         panelServerInfo.setLayout(new GridLayout(1, 4));
@@ -34,6 +38,7 @@ public class LoginFrame extends JFrame {
         panelServerInfo.add(textServerPort);
 
         JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.BOTTOM);
+        tabbedPane.setFont(new Font("楷体", 0, 25));
         formalUserLoginPanel = new FormalUserLoginPanel();
         visitorLoginPanel = new VisitorLoginPanel();
         tabbedPane.add("游客", visitorLoginPanel);

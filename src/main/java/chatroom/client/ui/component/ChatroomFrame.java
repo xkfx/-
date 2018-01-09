@@ -22,7 +22,7 @@ public class ChatroomFrame extends JFrame {
      */
     public ChatroomFrame() {
         // 设置窗体
-        setTitle("Little Pony v1.0");
+        setTitle("SmallTalk");
         setSize(800, 700);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -39,7 +39,7 @@ public class ChatroomFrame extends JFrame {
         JPanel rightColumn = new RightColumn();
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
+        // mainPanel.setLayout(new BorderLayout());
         mainPanel.add(chatPanel, BorderLayout.CENTER);
         // mainPanel.add(rightColumn, BorderLayout.EAST);
 
