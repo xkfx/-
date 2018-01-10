@@ -3,7 +3,7 @@ package chatroom.common.entity;
 import java.io.Serializable;
 import java.util.List;
 
-public class User implements Serializable {
+public class User extends Visitor implements Serializable {
 
     private Long userId;
 
@@ -70,6 +70,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return userId + "%" + username + "%" + password + "%" + nickname + "%" + other;
+        return nickname;
     }
 }

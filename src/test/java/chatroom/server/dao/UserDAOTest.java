@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 public class UserDAOTest {
@@ -27,17 +29,21 @@ public class UserDAOTest {
 
     @Test
     public void getUser() {
-
         User user = userDAO.getUserByUsername(username);
         userId = user.getUserId();
         assertEquals(PASSWORD, user.getPassword());
 
         user = userDAO.getUserById(userId);
         assertEquals(PASSWORD, user.getPassword());
+
+        userDAO.removeByUserId(userId);
     }
 
-    @After
-    public void removeByUserId() {
-        userDAO.removeByUserId(userId);
+    @Test
+    public void getFriendList() {
+        List<User> userList = userDAO.getFriendList(1002L);
+        for (User x : userList) {
+            System.out.println(x);
+        }
     }
 }

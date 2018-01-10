@@ -35,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
             messageBuilder.append(message.getContent() + "\n"); // 正文
             message.setContent(messageBuilder.toString());
             for (Socket eachSocket : socketVisitorMap.keySet()) {
-                ObjectOutputStream outputStream = new ObjectOutputStream(eachSocket.getOutputStream());
+                ObjectOutputStream outputStream = outputStreamMap.get(eachSocket);
                 outputStream.writeObject(message);
                 outputStream.flush();
             }

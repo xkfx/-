@@ -1,6 +1,7 @@
 package chatroom.client.ui.component;
 
 import chatroom.client.model.UIManager;
+import chatroom.common.entity.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class UserFrame extends JFrame {
     public UserFrame() {
         // 设置窗体
         setTitle("SmallTalk");
-        setSize(700, 750);
+        setSize(900, 800);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -36,26 +37,20 @@ public class UserFrame extends JFrame {
         chatPanel.add(messageDisplayPanel, BorderLayout.CENTER);
         chatPanel.add(messageEditPanel, BorderLayout.SOUTH);
 
-        // 测试
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(chatPanel, BorderLayout.EAST);
-
-        JPanel menuBar = new chatroom.client.ui.component.MenuBar();
-        FriendPanel friendPanel = new FriendPanel();
-
         // 布局
         setLayout(new BorderLayout());
-        // add(menuBar, BorderLayout.NORTH);
-        add(friendPanel, BorderLayout.CENTER);
-        // add(mainPanel, BorderLayout.EAST);
+        add(chatPanel, BorderLayout.CENTER);
     }
 
-    public void append(String str) {
+    public void displayMessage(String str) {
         messageDisplayPanel.append(str);
     }
 
-    public String getText() {
+    public Long getTarget() {
+        return messageEditPanel.getTarget();
+    }
+
+    public String getInput() {
         return messageEditPanel.getText();
     }
 

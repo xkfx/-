@@ -48,6 +48,7 @@ public class UIManager {
     public UserFrame getUserFrame() {
         if (userFrame == null) {
             userFrame = new UserFrame();
+            userFrame.addActionListener(frontController);
             userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
         return userFrame;

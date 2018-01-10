@@ -61,19 +61,17 @@ public class LoginFrameFrontController implements ActionListener {
     }
 
     private void initMainFrame() {
-        System.out.println("正在打开窗口······");
+        FrontController frontController = new FrontController();
+        uiManager.setFrontController(frontController);
 
+        System.out.println("正在打开窗口······");
         UserFrame userFrame = uiManager.getUserFrame();
         userFrame.setVisible(true);
-
-        FrontController frontController = new FrontController();
-        userFrame.append("前台控制器初始化完毕。\n");
 
         BackController backController = new BackController();
         backController.setUiManager(uiManager);
         backController.setClientMessageService(clientMessageService);
         backController.startup(clientMessageService.getSocket());
-        userFrame.append("后台控制器启动完毕。\n");
 
         frontController.setUiManager(uiManager);
         frontController.setClientMessageService(clientMessageService);

@@ -5,7 +5,7 @@ import java.awt.*;
 
 /**
  * 消息显示窗，可以认为是 JTextArea 的代理类，
- * 具有和 JTextArea 一样的 append 方法。
+ * 具有和 JTextArea 一样的 displayMessage 方法。
  */
 public class MessageDisplayPanel extends JPanel {
 

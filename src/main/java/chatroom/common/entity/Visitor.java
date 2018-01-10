@@ -4,6 +4,10 @@ public class Visitor {
 
     private String nickname;
 
+    public Visitor() {
+
+    }
+
     public Visitor(String nickname) {
         this.nickname = nickname;
     }

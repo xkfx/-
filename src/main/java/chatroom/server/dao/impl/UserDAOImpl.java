@@ -7,6 +7,7 @@ import chatroom.common.entity.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
@@ -112,8 +113,38 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getFriendsById(Long userId) {
-        return null;
+    public List<User> getFriendList(Long userId) {
+        List<User> users = null;
+        List<Long> idList = new ArrayList<>();
+        String sql = "select friend_id from friend_relation where"
+                + " user_id=?";
+        PreparedStatement prep = null;
+        ResultSet resultId = null;
+        try {
+            prep = dbAccess.getConnection().prepareStatement(sql);
+            prep.setLong(1, userId);
+            resultId = prep.executeQuery();
+            while (resultId.next()) {
+                idList.add(resultId.getLong("friend_id"));
+            }
+
+            if (idList.size() > 0) {
+                users = new ArrayList<>();
+                for (Long friendId : idList) {
+                    User user = getUserById(friendId);
+                    users.add(user);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                prep.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return users;
     }
 
     private void setUserFields(ResultSet result, User user) throws SQLException {

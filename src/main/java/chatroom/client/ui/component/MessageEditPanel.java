@@ -4,6 +4,7 @@ import chatroom.client.model.ClientMessageService;
 import chatroom.client.ui.enums.ButtonEnum;
 import chatroom.client.ui.exception.UserInputException;
 import chatroom.client.model.UIManager;
+import chatroom.common.entity.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +15,8 @@ import java.awt.event.KeyListener;
 
 public class MessageEditPanel extends JPanel {
 
-    private JButton buttonTest = new TextStyle();
-    private JButton buttonTest2 = new JButton("☺");
-    private JButton buttonTest3 = new JButton("消息记录");
+    private JComboBox<User> friendBox = new JComboBox<>();
+
     private JTextArea inputArea = new JTextArea(4, 22);
     private JButton buttonSend = new JButton(ButtonEnum.SEND.getExpression());
     private JButton buttonClose = new JButton(ButtonEnum.CLOESE.getExpression());
@@ -41,12 +41,19 @@ public class MessageEditPanel extends JPanel {
 
         JPanel panFunction = new JPanel();
         panFunction.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panFunction.add(buttonTest);
-        // panFunction.add(buttonTest2);
+        panFunction.add(friendBox);
+
+        User user = new User();
+        user.setNickname("逍遥一生");
+        user.setUserId(3333L);
+        friendBox.setFont(new Font("楷体", 0, 25));
+        friendBox.addItem(user);
+        friendBox.addItem(user);
+        friendBox.addItem(user);
+        friendBox.addItem(null);
 
         JPanel panRight = new JPanel();
         panRight.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        // panRight.add(buttonTest3);
 
         JPanel panMenu = new JPanel();
         panMenu.setLayout(new GridLayout(1, 2));
@@ -75,6 +82,13 @@ public class MessageEditPanel extends JPanel {
         this.UIManager = UIManager;
     }
 
+    public Long getTarget() {
+        User user = (User) friendBox.getSelectedItem();
+        if (user != null) {
+            return user.getUserId();
+        }
+        return null;
+    }
     /**
      * 对用户的输入格式进行检查，用户输入未必总来自输入面板！
      * @return

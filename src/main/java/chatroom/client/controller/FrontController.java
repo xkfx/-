@@ -3,7 +3,6 @@ package chatroom.client.controller;
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
 import chatroom.client.ui.component.MessageFrame;
-import chatroom.client.ui.component.MessagePanel;
 import chatroom.client.ui.component.UserFrame;
 import chatroom.common.message.Message;
 
@@ -33,7 +32,6 @@ public class FrontController implements ActionListener {
     public void setUiManager(UIManager manager) {
         uiManager = manager;
         userFrame = uiManager.getUserFrame();
-        userFrame.addActionListener(this);
         // 便于 uiManager 动态注册事件监听
         uiManager.setFrontController(this);
     }
@@ -45,12 +43,27 @@ public class FrontController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e);
-        if (e.getActionCommand().equals(SEND.getExpression())) privateMessage();
+        if (e.getActionCommand().equals(SEND.getExpression())) sendMessage();
     }
 
-    private void privateMessage() {
-        MessageFrame messageFrame = uiManager.getMessageFrame(1002L);
+    private void sendMessage() {
+        UserFrame userFrame = uiManager.getUserFrame();
         Long source = uiManager.getSource();
+        System.out.println(userFrame.getTarget());
+        System.out.println(userFrame.getInput());
+
+        if (userFrame.getTarget() == null) {
+            Message publicMsg = new Message(PUBLIC_MESSAGE, userFrame.getInput());
+            try {
+                clientMessageService.send(publicMsg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        MessageFrame messageFrame = uiManager.getMessageFrame(1002L);
         String content = messageFrame.getContent();
         System.out.println("发送一条私人消息" + source + "%" + content + "%" + 1002L);
 
@@ -67,7 +80,7 @@ public class FrontController implements ActionListener {
     }
 
     private void publicMessage() {
-        Message message = new Message(PUBLIC_MESSAGE, userFrame.getText());
+        Message message = new Message(PUBLIC_MESSAGE, userFrame.getInput());
         try {
             clientMessageService.send(message);
         } catch (IOException e) {

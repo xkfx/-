@@ -3,20 +3,17 @@ package chatroom.client.controller;
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
 import chatroom.client.ui.component.MessageFrame;
-import chatroom.client.ui.component.MessagePanel;
 import chatroom.client.ui.component.UserFrame;
 import chatroom.common.message.Message;
+import chatroom.common.message.MsgFriends;
 import chatroom.common.message.MsgProfile;
 import chatroom.common.entity.User;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-import static chatroom.common.message.Iconst.PERSONAL_MESSAGE;
-import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
-import static chatroom.common.message.Iconst.USER_PROFILE;
+import static chatroom.common.message.Iconst.*;
 
 /**
  * 后台控制器，监听来自服务端的消息，转换成模型更新。
@@ -47,6 +44,7 @@ public class BackController {
                             Object object = inputStream.readObject();
                             Message message = (Message) object;
                             if (message.getType() == PUBLIC_MESSAGE) {
+                                System.out.println("我收到一条群发消息哦！！！");
                                 publicMessage(message.getContent());
                             }
                             if (message.getType() == USER_PROFILE) {
@@ -54,6 +52,10 @@ public class BackController {
                             }
                             if (message.getType() == PERSONAL_MESSAGE) {
                                 uiManager.displayWarning(message.toString());
+                            }
+                            if (message.getType() == FRIEND_LIST) {
+                                MsgFriends msgFriends = (MsgFriends) message;
+                                uiManager.displayWarning(msgFriends.toString());
                             }
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
@@ -68,7 +70,7 @@ public class BackController {
 
     private void publicMessage(String str) {
         UserFrame userFrame = uiManager.getUserFrame();
-        userFrame.append(str);
+        userFrame.displayMessage(str);
     }
 
     private void updateProfile(Message message) {

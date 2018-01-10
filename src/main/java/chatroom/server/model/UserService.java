@@ -6,6 +6,7 @@ import chatroom.server.dto.Register;
 import chatroom.common.entity.User;
 
 import java.net.Socket;
+import java.util.List;
 
 public interface UserService {
 
@@ -16,6 +17,8 @@ public interface UserService {
     User getUser(Socket socket);
 
     User getUser(Long userId);
+
+    List<User> getFriendList(Long userId);
 
     Socket getSocket(Long userId);
 

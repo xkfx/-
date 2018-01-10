@@ -10,4 +10,5 @@ public interface Iconst {
     int GENERAL_REGISTER = 3;
     int USER_PROFILE = 4;
     int PERSONAL_MESSAGE = 5;
+    int FRIEND_LIST = 6;
 }

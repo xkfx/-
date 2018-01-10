@@ -10,6 +10,7 @@ import chatroom.server.model.UserService;
 
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserServiceImpl implements UserService {
@@ -74,6 +75,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(Long userId) {
         return longUserMap.get(userId);
+    }
+
+    @Override
+    public List<User> getFriendList(Long userId) {
+        return userDAO.getFriendList(userId);
     }
 
     @Override

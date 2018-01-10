@@ -28,5 +28,5 @@ public interface UserDAO {
 
     User getUserById(Long userId);
 
-    List<User> getFriendsById(Long userId);
+    List<User> getFriendList(Long userId);
 }

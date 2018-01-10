@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 import static chatroom.common.message.Iconst.*;
 
@@ -142,8 +143,13 @@ public class ServerController {
                         // 初始化信息: 个人信息， 好友列表/状态， 缓存消息
                         if (firstResponse.getFlag()) {
                             User user = userService.getUser(socket);
+                            messageService.addAcceptor(socket, user);
                             messageService.send(socket, new MsgProfile(user));
                             System.out.println("用户个人信息已经发出" + user);
+
+                            List<User> userList = userService.getFriendList(user.getUserId());
+                            messageService.send(socket, new MsgFriends(userList));
+                            System.out.println("用户好友列表已经发出" + userList);
 
                             continuedResponse(inputStream, socket);
                         }
