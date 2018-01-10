@@ -16,7 +16,7 @@ public class FormalUserLoginPanel extends JPanel {
 
     public FormalUserLoginPanel() {
         // 创建组件
-        JLabel labelUsername = new JLabel("邮箱：", JLabel.CENTER);
+        JLabel labelUsername = new JLabel("用户名：", JLabel.CENTER);
         JLabel labelPassword = new JLabel("密码：", JLabel.CENTER);
         textUsername = new JTextField();
         textPassword = new JPasswordField();

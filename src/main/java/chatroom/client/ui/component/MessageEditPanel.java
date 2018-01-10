@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.*;
+import java.util.List;
 
 public class MessageEditPanel extends JPanel {
 
@@ -33,6 +35,7 @@ public class MessageEditPanel extends JPanel {
         buttonSend.setFocusPainted(false);
         buttonSend.setFont(new Font("楷体", 0, 25));
         buttonClose.setFocusPainted(false);
+        buttonClose.setEnabled(false);
         buttonClose.setFont(new Font("楷体", 0, 25));
         inputArea.setLineWrap(true);
         inputArea.setFont(new Font("楷体", 0, 25));
@@ -43,13 +46,7 @@ public class MessageEditPanel extends JPanel {
         panFunction.setLayout(new FlowLayout(FlowLayout.LEFT));
         panFunction.add(friendBox);
 
-        User user = new User();
-        user.setNickname("逍遥一生");
-        user.setUserId(3333L);
         friendBox.setFont(new Font("楷体", 0, 25));
-        friendBox.addItem(user);
-        friendBox.addItem(user);
-        friendBox.addItem(user);
         friendBox.addItem(null);
 
         JPanel panRight = new JPanel();
@@ -82,6 +79,20 @@ public class MessageEditPanel extends JPanel {
         this.UIManager = UIManager;
     }
 
+    public void initFriendList(List<User> users) {
+        for (User x : users) {
+            friendBox.addItem(x);
+        }
+    }
+
+    public String getTargetName() {
+        User user = (User) friendBox.getSelectedItem();
+        if (user != null) {
+            return user.getNickname();
+        }
+        return null;
+    }
+
     public Long getTarget() {
         User user = (User) friendBox.getSelectedItem();
         if (user != null) {
@@ -101,6 +112,6 @@ public class MessageEditPanel extends JPanel {
         } else {
             // throw new UserInputException("用户没有输入");
         }
-        return "我是猪";
+        return "测试数据（默认发送）";
     }
 }

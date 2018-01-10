@@ -33,5 +33,13 @@ public class MessageDisplayPanel extends JPanel {
      */
     public void append(String str) {
         textArea.append(str);
+        scrollToBottom(scrollPane);
+    }
+
+    private void scrollToBottom(JScrollPane scrollPane) {
+        JScrollBar jscrollBar = scrollPane.getVerticalScrollBar();
+        if (jscrollBar != null) {
+            jscrollBar.setValue(jscrollBar.getMaximum());
+        }
     }
 }

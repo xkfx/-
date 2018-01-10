@@ -6,6 +6,8 @@ import chatroom.common.entity.User;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 /**
  * 聊天室窗体
@@ -24,7 +26,7 @@ public class UserFrame extends JFrame {
     public UserFrame() {
         // 设置窗体
         setTitle("SmallTalk");
-        setSize(900, 800);
+        setSize(750, 700);
         setResizable(false);
         setLocationRelativeTo(null);
 
@@ -44,6 +46,14 @@ public class UserFrame extends JFrame {
 
     public void displayMessage(String str) {
         messageDisplayPanel.append(str);
+    }
+
+    public void initFriendList(List<User> users) {
+        messageEditPanel.initFriendList(users);
+    }
+
+    public String getTargetName() {
+        return messageEditPanel.getTargetName();
     }
 
     public Long getTarget() {

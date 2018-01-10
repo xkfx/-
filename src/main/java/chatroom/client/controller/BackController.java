@@ -41,21 +41,25 @@ public class BackController {
                     while (true) {
                         try {
                             inputStream = clientMessageService.getInputStream();
+
                             Object object = inputStream.readObject();
                             Message message = (Message) object;
+
                             if (message.getType() == PUBLIC_MESSAGE) {
-                                System.out.println("我收到一条群发消息哦！！！");
                                 publicMessage(message.getContent());
                             }
+
                             if (message.getType() == USER_PROFILE) {
                                 updateProfile(message);
                             }
+
                             if (message.getType() == PERSONAL_MESSAGE) {
-                                uiManager.displayWarning(message.toString());
+                                UserFrame userFrame = uiManager.getUserFrame();
+                                userFrame.displayMessage(message.getContent());
                             }
+
                             if (message.getType() == FRIEND_LIST) {
-                                MsgFriends msgFriends = (MsgFriends) message;
-                                uiManager.displayWarning(msgFriends.toString());
+                                initFriendList(message);
                             }
                         } catch (ClassNotFoundException e) {
                             e.printStackTrace();
@@ -80,9 +84,10 @@ public class BackController {
         User user = msgProfile.getUser();
         // 实际上是传递给前端控制器
         uiManager.setSource(user.getUserId());
-        uiManager.displayWarning(user.toString());
+    }
 
-        MessageFrame messageFrame = uiManager.getMessageFrame(1002L);
-        messageFrame.setVisible(true);
+    private void initFriendList(Message message) {
+        MsgFriends msgFriends = (MsgFriends) message;
+        uiManager.initFriendList(msgFriends.getUser());
     }
 }

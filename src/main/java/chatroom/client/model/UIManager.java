@@ -2,9 +2,11 @@ package chatroom.client.model;
 
 import chatroom.client.controller.FrontController;
 import chatroom.client.ui.component.*;
+import chatroom.common.entity.User;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,6 +54,10 @@ public class UIManager {
             userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
         return userFrame;
+    }
+
+    public void initFriendList(List<User> users) {
+        userFrame.initFriendList(users);
     }
 
     public void setSource(Long source) {

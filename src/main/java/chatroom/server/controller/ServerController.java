@@ -36,7 +36,7 @@ public class ServerController {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(10000);
-            System.out.println("服务器正在监听 10001 端口 ...");
+            System.out.println("服务器正在监听 10000 端口 ...");
             while (true) {
                 serve(serverSocket.accept());
             }
@@ -57,19 +57,36 @@ public class ServerController {
         while (true) {
             Object object = inputStream.readObject();
             Message message = (Message) object;
+
             if (message.getType() == PUBLIC_MESSAGE) {
                 messageService.sendAll(socket, message);
             }
+
             if (message.getType() == PERSONAL_MESSAGE) {
-                System.out.println(message);
                 // 分两种情况：对方在线和对方不再线
                 Long target = message.getTarget();
                 if (userService.getSocket(target) != null) {
                     // 在线转发
                     Socket targetSocket = userService.getSocket(target);
+                    final String originContent = message.getContent(); // 不加 final 只是传引用！暂时还没有思考其它方法。
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(userService.getUser(message.getSource()).getNickname() + "悄悄对你说：");
+                    builder.append(originContent + "\n");
+
+                    message.setContent(builder.toString());
                     messageService.send(targetSocket, message);
+
+                    StringBuilder echo = new StringBuilder();
+                    echo.append("你悄悄对" + userService.getUser(target).getNickname() + "说：");
+                    echo.append(originContent + "\n");
+
+                    message.setContent(echo.toString());
+                    messageService.send(socket, message);
                 } else {
+                    message.setContent("对方不在线哦！\n");
+                    messageService.send(socket, message);
                     // 不在线缓存消息
+
                 }
             }
         }
@@ -148,9 +165,10 @@ public class ServerController {
                             System.out.println("用户个人信息已经发出" + user);
 
                             List<User> userList = userService.getFriendList(user.getUserId());
-                            messageService.send(socket, new MsgFriends(userList));
-                            System.out.println("用户好友列表已经发出" + userList);
-
+                            if (userList != null && userList.size() > 0) {
+                                messageService.send(socket, new MsgFriends(userList));
+                                System.out.println("用户好友列表已经发出" + userList);
+                            }
                             continuedResponse(inputStream, socket);
                         }
                     }

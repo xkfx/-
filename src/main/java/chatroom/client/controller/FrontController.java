@@ -42,18 +42,22 @@ public class FrontController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e);
-        if (e.getActionCommand().equals(SEND.getExpression())) sendMessage();
+        // System.out.println(e);
+        if (e.getActionCommand().equals(SEND.getExpression())) {
+            sendMessage();
+        }
     }
 
     private void sendMessage() {
         UserFrame userFrame = uiManager.getUserFrame();
         Long source = uiManager.getSource();
-        System.out.println(userFrame.getTarget());
-        System.out.println(userFrame.getInput());
+        Long target = userFrame.getTarget();
+        String content = userFrame.getInput();
 
-        if (userFrame.getTarget() == null) {
-            Message publicMsg = new Message(PUBLIC_MESSAGE, userFrame.getInput());
+
+        if (target == null) {
+            // 群发
+            Message publicMsg = new Message(PUBLIC_MESSAGE, content);
             try {
                 clientMessageService.send(publicMsg);
             } catch (IOException e) {
@@ -61,32 +65,20 @@ public class FrontController implements ActionListener {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-
-        MessageFrame messageFrame = uiManager.getMessageFrame(1002L);
-        String content = messageFrame.getContent();
-        System.out.println("发送一条私人消息" + source + "%" + content + "%" + 1002L);
-
-        Message message = new Message(PERSONAL_MESSAGE, content);
-        message.setSource(source);
-        message.setTarget(1002L);
-        try {
-            clientMessageService.send(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void publicMessage() {
-        Message message = new Message(PUBLIC_MESSAGE, userFrame.getInput());
-        try {
-            clientMessageService.send(message);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } else {
+            // 发送给好友
+            Message message = new Message(PERSONAL_MESSAGE, content);
+            message.setSource(source);
+            message.setTarget(target);
+            try {
+                clientMessageService.send(message);
+//                userFrame.displayMessage("你悄悄对" + userFrame.getTargetName()
+//                        + "说：" + content + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

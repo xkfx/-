@@ -34,7 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Message register(Register reg) {
-        if (userDAO.getUserByUsername(reg.getUsername()) == null) {
+        String regName = reg.getUsername();
+        String existName = userDAO.getUserByUsername(regName).getUsername();
+        if (!regName.equals(existName)) {
             User user = new User();
             user.setUsername(reg.getUsername());
             user.setPassword(reg.getPassword());
