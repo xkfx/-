@@ -2,7 +2,6 @@ package chatroom.client.controller;
 
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
-import chatroom.client.ui.component.MessageFrame;
 import chatroom.client.ui.component.UserFrame;
 import chatroom.common.message.Message;
 
@@ -73,7 +72,11 @@ public class FrontController implements ActionListener {
             try {
                 clientMessageService.send(message);
 //                userFrame.displayMessage("你悄悄对" + userFrame.getTargetName()
-//                        + "说：" + content + "\n");
+//
+//
+//              + "
+// 说：" + content + "\n");
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {

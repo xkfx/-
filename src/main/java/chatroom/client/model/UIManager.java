@@ -10,29 +10,44 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 便于组件之间交互
+ * 管理 GUI ，接受控制器的调用
  */
 public class UIManager {
     /**
-     * 便于动态创建窗口，并注册监听
+     * 便于动态创建组件时注册监听
      */
     private FrontController frontController;
 
     /**
-     * 当 controller 在 setUIManager 的时候应该同时把自身引用传递给 uiManager
+     * 当 frontController 在 setUIManager 的时候应该同时把自身引用传递给 uiManager
      * @param frontController
      */
     public void setFrontController(FrontController frontController) {
         this.frontController = frontController;
     }
 
-    private LoginFrame loginFrame;
-
-    private UserFrame userFrame;
-
+    /**
+     * 本机客户端用户的 user_id
+     * 便于 backController 向 frontController 传递用户id
+     */
     private Long source;
 
-    private Map<Long, MessageFrame> targetPanelMap = new HashMap<>();
+    public void setSource(Long source) {
+        this.source = source;
+    }
+
+    public Long getSource() {
+        return source;
+    }
+
+    /**
+     * 登陆窗口
+     */
+    private LoginFrame loginFrame;
+
+    public LoginFrame getLoginFrame() {
+        return loginFrame;
+    }
 
     /**
      * 创建一个登陆界面
@@ -43,10 +58,15 @@ public class UIManager {
         loginFrame.setVisible(true);
     }
 
-    public LoginFrame getLoginFrame() {
-        return loginFrame;
-    }
+    /**
+     * 用户主界面
+     */
+    private UserFrame userFrame;
 
+    /**
+     * 创建或者获取主界面
+     * @return
+     */
     public UserFrame getUserFrame() {
         if (userFrame == null) {
             userFrame = new UserFrame();
@@ -56,17 +76,25 @@ public class UIManager {
         return userFrame;
     }
 
+    /**
+     * 初始化主界面的好友列表
+     * @param users
+     */
     public void initFriendList(List<User> users) {
         userFrame.initFriendList(users);
     }
 
-    public void setSource(Long source) {
-        this.source = source;
+    /**
+     * 主要用于写 demo，弹出一个提示框
+     * @param warning
+     */
+    public void displayWarning(String warning) {
+        JOptionPane.showMessageDialog(null, warning);
     }
 
-    public Long getSource() {
-        return source;
-    }
+    // to-do line ============================================================
+
+    private Map<Long, MessageFrame> targetPanelMap = new HashMap<>();
 
     public MessageFrame getMessageFrame(Long target) {
         MessageFrame messageFrame = null;
@@ -78,9 +106,5 @@ public class UIManager {
             targetPanelMap.put(target, messageFrame);
         }
         return messageFrame;
-    }
-
-    public void displayWarning(String warning) {
-        JOptionPane.showMessageDialog(null, warning);
     }
 }

@@ -18,9 +18,9 @@ import static chatroom.client.ui.enums.ButtonEnum.LOGIN;
 import static chatroom.client.ui.enums.ButtonEnum.REGISTER;
 
 /**
- * 登陆界面的前端控制器，将用户动作映射成模型更新。
+ * LoginController：发送验证消息，管理 GUI
  */
-public class LoginFrameFrontController implements ActionListener {
+public class LoginController implements ActionListener {
 
     private ClientMessageService clientMessageService;
 

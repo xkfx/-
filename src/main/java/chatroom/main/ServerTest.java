@@ -1,4 +1,4 @@
-package chatroom.test;
+package chatroom.main;
 
 import chatroom.server.controller.ServerController;
 

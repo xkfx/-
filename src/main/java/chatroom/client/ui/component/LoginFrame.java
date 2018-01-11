@@ -1,8 +1,5 @@
 package chatroom.client.ui.component;
 
-import chatroom.client.controller.LoginFrameFrontController;
-import chatroom.client.model.UIManager;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
