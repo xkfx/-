@@ -1,4 +1,4 @@
-package chatroom.client.ui.component;
+package chatroom.client.ui.component.impl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,36 +9,31 @@ import static chatroom.client.ui.enums.ButtonEnum.REGISTER;
 
 public class FormalUserLoginPanel extends JPanel {
 
-    private JButton buttonLogin;
-    private JButton buttonRegister;
-    private JTextField textUsername;
-    private JPasswordField textPassword;
+    private static final JLabel LABEL_USERNAME = new JLabel("用户名：", JLabel.CENTER);
+    private static final JLabel LABEL_PASSWORD = new JLabel("密码：", JLabel.CENTER);
+
+    private final JTextField textUsername = new JTextField();
+    private final JPasswordField textPassword = new JPasswordField();
+    private final JButton buttonLogin = new JButton(LOGIN.getExpression());
+    private final JButton buttonRegister = new JButton(REGISTER.getExpression());
 
     public FormalUserLoginPanel() {
-        // 创建组件
-        JLabel labelUsername = new JLabel("用户名：", JLabel.CENTER);
-        JLabel labelPassword = new JLabel("密码：", JLabel.CENTER);
-        textUsername = new JTextField();
-        textPassword = new JPasswordField();
-        // 设置组件
-        labelUsername.setFont(new Font("楷体", 0, 20));
-        labelPassword.setFont(new Font("楷体", 0, 20));
+        LABEL_USERNAME.setFont(new Font("楷体", 0, 20));
+        LABEL_PASSWORD.setFont(new Font("楷体", 0, 20));
         textUsername.setFont(new Font("楷体", 0, 20));
         textPassword.setFont(new Font("楷体", 0, 20));
-        // 布局
-        JPanel panelInput = new JPanel();
-        panelInput.setLayout(new GridLayout(2, 2));
-        panelInput.add(labelUsername);
-        panelInput.add(textUsername);
-        panelInput.add(labelPassword);
-        panelInput.add(textPassword);
-
-        buttonLogin = new JButton(LOGIN.getExpression());
         buttonLogin.setFont(new Font("楷体", 0, 20));
-        buttonRegister = new JButton(REGISTER.getExpression());
         buttonRegister.setFont(new Font("楷体", 0, 20));
         buttonLogin.setFocusPainted(false);
         buttonRegister.setFocusPainted(false);
+
+        JPanel panelInput = new JPanel();
+        panelInput.setLayout(new GridLayout(2, 2));
+        panelInput.add(LABEL_USERNAME);
+        panelInput.add(textUsername);
+        panelInput.add(LABEL_PASSWORD);
+        panelInput.add(textPassword);
+
         JPanel panelButton = new JPanel();
         panelButton.setLayout(new FlowLayout());
         panelButton.add(buttonLogin);

@@ -1,7 +1,9 @@
 package chatroom.client.model;
 
 import chatroom.client.controller.FrontController;
-import chatroom.client.ui.component.*;
+import chatroom.client.ui.component.impl.LoginFrame;
+import chatroom.client.ui.component.impl.MessageFrame;
+import chatroom.client.ui.component.impl.UserFrame;
 import chatroom.common.entity.User;
 
 import javax.swing.*;
@@ -14,9 +16,13 @@ import java.util.Map;
  */
 public class UIManager {
     /**
-     * 便于动态创建组件时注册监听
+     * 本机客户端用户的 user_id
+     * 便于 backController 向 frontController 传递用户id
      */
+    private Long source;
     private FrontController frontController;
+    private LoginFrame loginFrame;
+    private UserFrame userFrame;
 
     /**
      * 当 frontController 在 setUIManager 的时候应该同时把自身引用传递给 uiManager
@@ -26,12 +32,6 @@ public class UIManager {
         this.frontController = frontController;
     }
 
-    /**
-     * 本机客户端用户的 user_id
-     * 便于 backController 向 frontController 传递用户id
-     */
-    private Long source;
-
     public void setSource(Long source) {
         this.source = source;
     }
@@ -39,11 +39,6 @@ public class UIManager {
     public Long getSource() {
         return source;
     }
-
-    /**
-     * 登陆窗口
-     */
-    private LoginFrame loginFrame;
 
     public LoginFrame getLoginFrame() {
         return loginFrame;
@@ -57,11 +52,6 @@ public class UIManager {
         loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setVisible(true);
     }
-
-    /**
-     * 用户主界面
-     */
-    private UserFrame userFrame;
 
     /**
      * 创建或者获取主界面

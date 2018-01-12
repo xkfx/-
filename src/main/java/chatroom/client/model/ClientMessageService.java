@@ -8,38 +8,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
-
 public class ClientMessageService {
+
     private Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
-
-    private UIManager UIManager;
-
-    public ClientMessageService() {
-
-    }
-
-    public void establishConnection(String host, int port) throws IOException {
-        System.out.println("正在创建Socket······");
-        socket = new Socket(host, port);
-        System.out.println("正在创建输出流······");
-        outputStream = new ObjectOutputStream(socket.getOutputStream());
-    }
 
     public Socket getSocket() {
         return socket;
     }
 
+    public ObjectInputStream getInputStream() {
+        return inputStream;
+    }
 
-    /**
-     * 验证完用户身份后该方法不再用于接收消息，所有来自服务器的消息一律由后台控制器处理。
-     * @param message 代发消息
-     * @return 除第一次外，其余情况下均为空。
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
     public void send(Message message) throws IOException, ClassNotFoundException {
         outputStream.writeObject(message);
         outputStream.flush();
@@ -57,22 +39,11 @@ public class ClientMessageService {
         return result;
     }
 
-    public void disconnection() throws IOException {
-        outputStream.close();
-        inputStream.close();
-        socket.close();
+    public void establishConnection(String host, int port) throws IOException {
+        System.out.println("正在创建Socket······");
+        socket = new Socket(host, port);
+        System.out.println("正在创建输出流······");
+        outputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
-    public void sendPublicMessage(String text) throws IOException {
-        if (socket != null) {
-            Message message = new Message(PUBLIC_MESSAGE, socket.getInetAddress() + ": " + text);
-            // 发送消息
-            outputStream.writeObject(message);
-            outputStream.flush();
-        }
-    }
-
-    public ObjectInputStream getInputStream() {
-        return inputStream;
-    }
 }

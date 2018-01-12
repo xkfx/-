@@ -1,9 +1,9 @@
 package chatroom.server.model;
 
+import chatroom.common.entity.User;
 import chatroom.common.message.Message;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
-import chatroom.common.entity.User;
 
 import java.net.Socket;
 import java.util.List;

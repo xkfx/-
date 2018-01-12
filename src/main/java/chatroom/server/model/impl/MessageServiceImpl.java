@@ -1,7 +1,7 @@
 package chatroom.server.model.impl;
 
-import chatroom.common.message.Message;
 import chatroom.common.entity.Visitor;
+import chatroom.common.message.Message;
 import chatroom.server.model.MessageService;
 
 import java.io.IOException;

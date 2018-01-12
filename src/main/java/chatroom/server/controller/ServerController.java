@@ -1,10 +1,10 @@
 package chatroom.server.controller;
 
 import chatroom.common.entity.User;
+import chatroom.common.entity.Visitor;
 import chatroom.common.message.*;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
-import chatroom.common.entity.Visitor;
 import chatroom.server.model.MessageService;
 import chatroom.server.model.UserService;
 import chatroom.server.model.impl.MessageServiceImpl;

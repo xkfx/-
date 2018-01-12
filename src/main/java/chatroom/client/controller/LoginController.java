@@ -2,8 +2,8 @@ package chatroom.client.controller;
 
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
-import chatroom.client.ui.component.UserFrame;
-import chatroom.client.ui.component.LoginFrame;
+import chatroom.client.ui.component.impl.LoginFrame;
+import chatroom.client.ui.component.impl.UserFrame;
 import chatroom.common.message.Message;
 import chatroom.common.message.MsgLogin;
 import chatroom.common.message.MsgRegister;
@@ -13,9 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import static chatroom.client.ui.enums.ButtonEnum.CONNECT_TO_SERVER;
-import static chatroom.client.ui.enums.ButtonEnum.LOGIN;
-import static chatroom.client.ui.enums.ButtonEnum.REGISTER;
+import static chatroom.client.ui.enums.ButtonEnum.*;
 
 /**
  * LoginController：发送验证消息，管理 GUI
@@ -23,29 +21,12 @@ import static chatroom.client.ui.enums.ButtonEnum.REGISTER;
 public class LoginController implements ActionListener {
 
     private ClientMessageService clientMessageService;
-
     private UIManager uiManager;
-
-    public void setUiManager(UIManager manager) {
-        uiManager = manager;
-        LoginFrame loginFrame = uiManager.getLoginFrame();
-        loginFrame.addActionListener(this);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println(e);
-        String actionCommand = e.getActionCommand();
-        if (actionCommand.equals(CONNECT_TO_SERVER.getExpression())) visitorLogin();
-        if (actionCommand.equals(LOGIN.getExpression())) login();
-        if (actionCommand.equals(REGISTER.getExpression())) register();
-    }
 
     private Message sendFirstMsg(String serverIp, int serverPort, Message firstMsg) {
         clientMessageService = new ClientMessageService();
         Message result = null;
         try {
-
             System.out.println("准备与服务器建立连接······");
             clientMessageService.establishConnection(serverIp, serverPort);
 
@@ -129,5 +110,19 @@ public class LoginController implements ActionListener {
         } else {
 
         }
+    }
+
+    public void setUiManager(UIManager manager) {
+        uiManager = manager;
+        LoginFrame loginFrame = uiManager.getLoginFrame();
+        loginFrame.addActionListener(this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        final String actionCommand = e.getActionCommand();
+        if (actionCommand.equals(CONNECT_TO_SERVER.getExpression())) visitorLogin();
+        if (actionCommand.equals(LOGIN.getExpression())) login();
+        if (actionCommand.equals(REGISTER.getExpression())) register();
     }
 }

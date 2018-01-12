@@ -1,4 +1,4 @@
-package chatroom.client.ui.component;
+package chatroom.client.ui.component.impl;
 
 import chatroom.client.ui.enums.ButtonEnum;
 import chatroom.client.ui.enums.LabelEunm;
@@ -9,29 +9,25 @@ import java.awt.event.ActionListener;
 
 public class VisitorLoginPanel extends JPanel {
 
-    private JButton buttonLogin;
-    private JTextField textNickname;
+    private static final JLabel LABEL_NAME = new JLabel(LabelEunm.NICKNAME.getExpression(), JLabel.CENTER);
+
+    private final JTextField textNickname = new JTextField("逍遥の一生");
+    private final JButton buttonConnection  = new JButton(ButtonEnum.CONNECT_TO_SERVER.getExpression());
 
     public VisitorLoginPanel() {
-        // 创建组件
-        JLabel labelName = new JLabel(LabelEunm.NICKNAME.getExpression(), JLabel.CENTER);
-        textNickname = new JTextField();
-        // 设置组件
-        textNickname.setText("逍遥の一生");
-        labelName.setFont(new Font("楷体", 0, 25));
+        LABEL_NAME.setFont(new Font("楷体", 0, 25));
         textNickname.setFont(new Font("", 0, 25));
-          // 布局
+        buttonConnection.setFocusPainted(false);
+        buttonConnection.setFont(new Font("楷体", 0, 25));
+
         JPanel panelInput = new JPanel();
         panelInput.setLayout(new GridLayout(1, 2));
-        panelInput.add(labelName);
+        panelInput.add(LABEL_NAME);
         panelInput.add(textNickname);
 
-        buttonLogin = new JButton(ButtonEnum.CONNECT_TO_SERVER.getExpression());
-        buttonLogin.setFocusPainted(false);
-        buttonLogin.setFont(new Font("楷体", 0, 25));
         JPanel panelButton = new JPanel();
         panelButton.setLayout(new FlowLayout());
-        panelButton.add(buttonLogin);
+        panelButton.add(buttonConnection);
 
         setLayout(new BorderLayout());
         add(panelInput, BorderLayout.CENTER);
@@ -43,6 +39,6 @@ public class VisitorLoginPanel extends JPanel {
     }
 
     public void addActionListener(ActionListener listener) {
-        buttonLogin.addActionListener(listener);
+        buttonConnection.addActionListener(listener);
     }
 }

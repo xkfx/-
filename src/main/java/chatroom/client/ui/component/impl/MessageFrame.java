@@ -1,4 +1,4 @@
-package chatroom.client.ui.component;
+package chatroom.client.ui.component.impl;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;

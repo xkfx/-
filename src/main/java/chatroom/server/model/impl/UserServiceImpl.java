@@ -1,11 +1,11 @@
 package chatroom.server.model.impl;
 
+import chatroom.common.entity.User;
 import chatroom.common.message.Message;
 import chatroom.server.dao.UserDAO;
 import chatroom.server.dao.impl.UserDAOImpl;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
-import chatroom.common.entity.User;
 import chatroom.server.model.UserService;
 
 import java.net.Socket;

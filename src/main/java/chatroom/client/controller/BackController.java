@@ -2,12 +2,11 @@ package chatroom.client.controller;
 
 import chatroom.client.model.ClientMessageService;
 import chatroom.client.model.UIManager;
-import chatroom.client.ui.component.MessageFrame;
-import chatroom.client.ui.component.UserFrame;
+import chatroom.client.ui.component.impl.UserFrame;
+import chatroom.common.entity.User;
 import chatroom.common.message.Message;
 import chatroom.common.message.MsgFriends;
 import chatroom.common.message.MsgProfile;
-import chatroom.common.entity.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,8 +20,24 @@ import static chatroom.common.message.Iconst.*;
 public class BackController {
 
     private ClientMessageService clientMessageService;
-
     private UIManager uiManager;
+
+    private void publicMessage(String str) {
+        UserFrame userFrame = uiManager.getUserFrame();
+        userFrame.displayMessage(str);
+    }
+
+    private void updateProfile(Message message) {
+        MsgProfile msgProfile = (MsgProfile) message;
+        User user = msgProfile.getUser();
+        // 实际上是传递给前端控制器
+        uiManager.setSource(user.getUserId());
+    }
+
+    private void initFriendList(Message message) {
+        MsgFriends msgFriends = (MsgFriends) message;
+        uiManager.initFriendList(msgFriends.getUser());
+    }
 
     public void setClientMessageService(ClientMessageService clientMessageService) {
         this.clientMessageService = clientMessageService;
@@ -70,24 +85,5 @@ public class BackController {
                 }
             }
         }).start();
-    }
-
-    private void publicMessage(String str) {
-        UserFrame userFrame = uiManager.getUserFrame();
-        userFrame.displayMessage(str);
-    }
-
-    private void updateProfile(Message message) {
-        System.out.println("用户个人信息已经接收");
-
-        MsgProfile msgProfile = (MsgProfile) message;
-        User user = msgProfile.getUser();
-        // 实际上是传递给前端控制器
-        uiManager.setSource(user.getUserId());
-    }
-
-    private void initFriendList(Message message) {
-        MsgFriends msgFriends = (MsgFriends) message;
-        uiManager.initFriendList(msgFriends.getUser());
     }
 }

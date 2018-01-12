@@ -1,4 +1,4 @@
-package chatroom.client.ui.component;
+package chatroom.client.ui.component.impl;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +9,9 @@ import java.awt.*;
  */
 public class MessageDisplayPanel extends JPanel {
 
-    private JTextArea textArea;
-    private JScrollPane scrollPane;
+    private final JTextArea textArea;
+    private final JScrollPane scrollPane;
+
     /**
      * 创建一个空的消息显示窗，具有确定的行数和列数。
      * @param rows the number of rows >= 0
@@ -19,12 +20,20 @@ public class MessageDisplayPanel extends JPanel {
     public MessageDisplayPanel(int rows, int columns) {
         textArea = new JTextArea(rows, columns);
         textArea.setFont(new Font("楷体", 0, 25));
-        scrollPane = new JScrollPane(textArea);
         textArea.setLineWrap(true);
         textArea.setEditable(false);
 
+        scrollPane = new JScrollPane(textArea);
+
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
+    }
+
+    private void scrollToBottom(JScrollPane scrollPane) {
+        JScrollBar jscrollBar = scrollPane.getVerticalScrollBar();
+        if (jscrollBar != null) {
+            jscrollBar.setValue(jscrollBar.getMaximum());
+        }
     }
 
     /**
@@ -34,12 +43,5 @@ public class MessageDisplayPanel extends JPanel {
     public void append(String str) {
         textArea.append(str);
         scrollToBottom(scrollPane);
-    }
-
-    private void scrollToBottom(JScrollPane scrollPane) {
-        JScrollBar jscrollBar = scrollPane.getVerticalScrollBar();
-        if (jscrollBar != null) {
-            jscrollBar.setValue(jscrollBar.getMaximum());
-        }
     }
 }
