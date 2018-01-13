@@ -20,38 +20,13 @@ import java.util.List;
 import static chatroom.common.message.Iconst.*;
 
 public class ServerController {
-    /**
-     * 消息服务
-     */
-    private MessageService messageService = new MessageServiceImpl();
-    /**
-     * 用户服务
-     */
-    private UserService userService = new UserServiceImpl();
 
-    /**
-     * 启动服务器
-     */
-    public void startup() {
-        ServerSocket serverSocket = null;
-        try {
-            serverSocket = new ServerSocket(10000);
-            System.out.println("服务器正在监听 10000 端口 ...");
-            while (true) {
-                serve(serverSocket.accept());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private static final int PORT = 10000;
+    private static final String PROMPT = "The server is listening on 10000 port ...";
 
-    /**
-     * 为客户端提供持续的
-     * @param inputStream 接收第一个消息前创建的（根据第一个消息决定是否提供持续响应）
-     * @param socket
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
+    private final MessageService messageService = new MessageServiceImpl();
+    private final UserService userService = new UserServiceImpl();
+
     private void continuedResponse(ObjectInputStream inputStream, Socket socket) throws IOException, ClassNotFoundException {
         System.out.println("准备持续为此Socket提供服务······");
         while (true) {
@@ -92,17 +67,11 @@ public class ServerController {
         }
     }
 
-    /**
-     * 多线程为每个客户端提供服务
-     * @param socket
-     */
-    private void serve(final Socket socket) {
+    private void serveSocket(final Socket socket) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                System.out.println(socket.hashCode() + "接入服务器······");
-
+                printPrompt(socket.hashCode() + " accesses the server.");
                 ObjectInputStream inputStream = null;
 
                 try {
@@ -203,5 +172,30 @@ public class ServerController {
                 }
             }
         }).start();
+    }
+
+    private ServerSocket createServerSocket(final int port) throws IOException {
+        ServerSocket result = new ServerSocket(port);
+        return result;
+    }
+
+    private void printPrompt(final String prompt) {
+        System.out.println(prompt);
+    }
+
+    private void startWorking(final ServerSocket serverSocket) throws IOException {
+        while (true) {
+            serveSocket(serverSocket.accept());
+        }
+    }
+
+    public void startup() {
+        try {
+            ServerSocket serverSocket = createServerSocket(PORT);
+            printPrompt(PROMPT);
+            startWorking(serverSocket);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

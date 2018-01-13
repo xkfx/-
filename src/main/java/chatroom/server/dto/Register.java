@@ -1,6 +1,7 @@
 package chatroom.server.dto;
 
 public class Register {
+
     private String username;
     private String password;
 

@@ -10,9 +10,7 @@ import java.util.List;
 
 public interface UserService {
 
-    Message register(Register reg);
-
-    Message login(Socket socket, Login login);
+    Socket getSocket(Long userId);
 
     User getUser(Socket socket);
 
@@ -20,9 +18,9 @@ public interface UserService {
 
     List<User> getFriendList(Long userId);
 
-    Socket getSocket(Long userId);
+    Message register(Register reg);
+
+    Message login(Socket socket, Login login);
 
     Message logout(Socket socket);
-
-    void sendPublicMessage();
 }

@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-    private DBAccess dbAccess = new DBAccess();
+
+    private final DBAccess dbAccess = new DBAccess();
 
     @Override
     public boolean saveUser(User user) {

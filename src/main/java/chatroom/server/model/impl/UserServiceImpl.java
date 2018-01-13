@@ -14,22 +14,31 @@ import java.util.List;
 import java.util.Map;
 
 public class UserServiceImpl implements UserService {
-    private UserDAO userDAO = new UserDAOImpl();
-    /**
-     * 对外映射，根据 socket 找用户资料
-     */
-    private Map<Socket, User> socketUserMap = new HashMap<>();
-    /**
-     * 内部映射，查找好友
-     */
-    private Map<Long, User> longUserMap = new HashMap<>();
-    /**
-     * 对外，根据 id 找 socket
-     */
-    private Map<Long, Socket> longSocketMap = new HashMap<>();
 
-    public UserServiceImpl() {
+    private final Map<Socket, User> socketUserMap = new HashMap<>();
+    private final Map<Long, User> longUserMap = new HashMap<>();
+    private final Map<Long, Socket> longSocketMap = new HashMap<>();
 
+    private final UserDAO userDAO = new UserDAOImpl();
+
+    @Override
+    public Socket getSocket(Long userId) {
+        return longSocketMap.get(userId);
+    }
+
+    @Override
+    public User getUser(Socket socket) {
+        return socketUserMap.get(socket);
+    }
+
+    @Override
+    public User getUser(Long userId) {
+        return longUserMap.get(userId);
+    }
+
+    @Override
+    public List<User> getFriendList(Long userId) {
+        return userDAO.getFriendList(userId);
     }
 
     @Override
@@ -69,25 +78,7 @@ public class UserServiceImpl implements UserService {
         return Message.fail("用户名或者密码错误");
     }
 
-    @Override
-    public User getUser(Socket socket) {
-        return socketUserMap.get(socket);
-    }
 
-    @Override
-    public User getUser(Long userId) {
-        return longUserMap.get(userId);
-    }
-
-    @Override
-    public List<User> getFriendList(Long userId) {
-        return userDAO.getFriendList(userId);
-    }
-
-    @Override
-    public Socket getSocket(Long userId) {
-        return longSocketMap.get(userId);
-    }
 
     @Override
     public Message logout(Socket socket) {
@@ -99,10 +90,5 @@ public class UserServiceImpl implements UserService {
         }
         socketUserMap.remove(socket);
         return null;
-    }
-
-    @Override
-    public void sendPublicMessage() {
-
     }
 }

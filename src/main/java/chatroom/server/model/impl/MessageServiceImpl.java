@@ -13,8 +13,9 @@ import java.util.Map;
 import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
 
 public class MessageServiceImpl implements MessageService {
-    private Map<Socket, Visitor> socketVisitorMap = new HashMap<>();
-    private Map<Socket, ObjectOutputStream> outputStreamMap = new HashMap<>();
+
+    private final Map<Socket, Visitor> socketVisitorMap = new HashMap<>();
+    private final Map<Socket, ObjectOutputStream> outputStreamMap = new HashMap<>();
 
     @Override
     public void addAcceptor(Socket socket, Visitor visitor) {
