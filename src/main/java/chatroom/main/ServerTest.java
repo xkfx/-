@@ -1,10 +1,10 @@
 package chatroom.main;
 
-import chatroom.server.controller.ServerController;
+import chatroom.server.controller.Server;
 
 public class ServerTest {
     public static void main(String[] args) {
-        ServerController serverController = new ServerController();
-        serverController.startup();
+        Server server = new Server();
+        server.startup();
     }
 }
