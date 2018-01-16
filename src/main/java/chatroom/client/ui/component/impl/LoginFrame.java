@@ -19,6 +19,7 @@ public class LoginFrame extends JFrame {
         setSize(540, 270);
         setResizable(false);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         LABEL_IP.setFont(new Font("楷体", 0, 25));
         LABEL_PORT.setFont(new Font("楷体", 0, 25));

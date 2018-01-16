@@ -33,10 +33,14 @@ public class ClientMessageService {
         System.out.println("验证消息发送完毕······");
 
         inputStream = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+        printClientPrompt("Waiting for server response ...");
         Message result = (Message) inputStream.readObject();
         System.out.println("等待服务器响应验证······");
 
         return result;
+    }
+
+    private void printClientPrompt(String s) {
     }
 
     public void establishConnection(String host, int port) throws IOException {

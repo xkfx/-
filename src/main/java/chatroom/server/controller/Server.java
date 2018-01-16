@@ -27,15 +27,12 @@ public class Server {
     private final UserService userService = new UserServiceImpl();
 
     private ObjectInputStream getObjectInputStream(final Socket socket) throws IOException {
-        ObjectInputStream result = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-        return result;
+        return new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
     }
 
     // 这里可以修改为 inputStream 但是性质没搞懂暂时不动
     private Message getFirstMessageFromObjectInputStream(final ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
-        Object object = objectInputStream.readObject();
-        Message result = (Message) object;
-        return result;
+        return (Message) objectInputStream.readObject();
     }
 
     private void continuedResponse(ObjectInputStream inputStream, Socket socket) throws IOException, ClassNotFoundException {
@@ -120,12 +117,12 @@ public class Server {
             User user = userService.getUser(socket);
             messageService.addAcceptor(socket, user);
             messageService.send(socket, new MsgProfile(user));
-            System.out.println("用户个人信息已经发出" + user);
+            printServerPrompt("用户个人信息已经发出" + user);
 
             List<User> userList = userService.getFriendList(user.getUserId());
             if (userList != null && userList.size() > 0) {
                 messageService.send(socket, new MsgFriends(userList));
-                System.out.println("用户好友列表已经发出" + userList);
+                printServerPrompt("用户好友列表已经发出" + userList);
             }
             continuedResponse(objectInputStream, socket);
         }
@@ -133,8 +130,7 @@ public class Server {
 
     // 参数不该这么多。。。
     private void handleFirstMessage(final Socket socket, final Message message, final ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
-        final int messageType = message.getType();
-        switch (messageType) { // 网上说，分支多的话，通常而言 switch要比 if快一点点，但是我是从减少重复代码角度选用 switch 的
+        switch (message.getType()) { // 网上说，分支多的话，通常而言 switch要比 if快一点点，但是我是从减少重复代码角度选用 switch 的
             case VISITOR_ACCESS:
                 visitorAccess(message, socket, objectInputStream);
                 break;
@@ -145,7 +141,7 @@ public class Server {
                 generalLogin(message, socket, objectInputStream);
                 break;
             default:
-                // to do
+                // to do 引入多态？
                 break;
         }
     }
@@ -190,11 +186,6 @@ public class Server {
         }).start();
     }
 
-    private ServerSocket createServerSocket(final int port) throws IOException {
-        ServerSocket result = new ServerSocket(port);
-        return result;
-    }
-
     private void printServerPrompt(final String prompt) {
         System.out.println(prompt);
     }
@@ -208,7 +199,7 @@ public class Server {
 
     public void startup() {
         try {
-            ServerSocket serverSocket = createServerSocket(PORT);
+            ServerSocket serverSocket = new ServerSocket(PORT);
             printServerPrompt("The server is listening on " + PORT + " port ...");
             startWorking(serverSocket);
         } catch (IOException e) {

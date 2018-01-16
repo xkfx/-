@@ -17,6 +17,7 @@ public class UserFrame extends JFrame {
         setSize(750, 700);
         setResizable(false);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel chatPanel = new JPanel();
         chatPanel.setLayout(new BorderLayout());

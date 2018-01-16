@@ -23,16 +23,17 @@ public class LoginController implements ActionListener {
     private ClientMessageService clientMessageService;
     private UIManager uiManager;
 
+    private void printClientPrompt(final String prompt) {
+        System.out.println(prompt);
+    }
+
     private Message sendFirstMsg(String serverIp, int serverPort, Message firstMsg) {
         clientMessageService = new ClientMessageService();
         Message result = null;
         try {
-            System.out.println("准备与服务器建立连接······");
+            printClientPrompt("Ready to establish a connection with the server ...");
             clientMessageService.establishConnection(serverIp, serverPort);
-
             result = clientMessageService.sendOnce(firstMsg);
-            System.out.println("等待服务器响应······");
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -45,7 +46,6 @@ public class LoginController implements ActionListener {
         FrontController frontController = new FrontController();
         uiManager.setFrontController(frontController);
 
-        System.out.println("正在打开窗口······");
         UserFrame userFrame = uiManager.getUserFrame();
         userFrame.setVisible(true);
 
@@ -120,9 +120,9 @@ public class LoginController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        final String actionCommand = e.getActionCommand();
-        if (actionCommand.equals(CONNECT_TO_SERVER.getExpression())) visitorLogin();
-        if (actionCommand.equals(LOGIN.getExpression())) login();
-        if (actionCommand.equals(REGISTER.getExpression())) register();
+        final String command = e.getActionCommand();
+        if (command.equals(CONNECT_TO_SERVER.getExpression())) visitorLogin();
+        if (command.equals(LOGIN.getExpression())) login();
+        if (command.equals(REGISTER.getExpression())) register();
     }
 }

@@ -49,7 +49,6 @@ public class UIManager {
      */
     public void init() {
         loginFrame = new LoginFrame();
-        loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         loginFrame.setVisible(true);
     }
 
@@ -61,7 +60,6 @@ public class UIManager {
         if (userFrame == null) {
             userFrame = new UserFrame();
             userFrame.addActionListener(frontController);
-            userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         }
         return userFrame;
     }
