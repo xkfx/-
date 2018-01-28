@@ -1,6 +1,6 @@
 package chatroom.client.controller;
 
-import chatroom.client.model.UIManager;
+import chatroom.client.ui.UIManager;
 
 public class InitializationController {
     /**

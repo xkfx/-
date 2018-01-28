@@ -1,4 +1,4 @@
-package chatroom.client.model;
+package chatroom.client.util;
 
 import chatroom.common.message.Message;
 

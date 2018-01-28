@@ -1,7 +1,8 @@
-package chatroom.server.model;
+package chatroom.server.service;
 
 import chatroom.common.message.Message;
-import chatroom.server.model.impl.MessageServiceImpl;
+import chatroom.server.service.impl.MessageServiceImpl;
+import chatroom.server.util.MessageService;
 import org.junit.Test;
 
 import java.io.BufferedInputStream;

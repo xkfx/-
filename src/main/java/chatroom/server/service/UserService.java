@@ -1,4 +1,4 @@
-package chatroom.server.model;
+package chatroom.server.service;
 
 import chatroom.common.entity.User;
 import chatroom.common.message.Message;

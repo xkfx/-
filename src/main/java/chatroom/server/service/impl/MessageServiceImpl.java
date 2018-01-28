@@ -1,8 +1,8 @@
-package chatroom.server.model.impl;
+package chatroom.server.service.impl;
 
 import chatroom.common.entity.Visitor;
 import chatroom.common.message.Message;
-import chatroom.server.model.MessageService;
+import chatroom.server.util.MessageService;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

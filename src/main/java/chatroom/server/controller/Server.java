@@ -5,10 +5,10 @@ import chatroom.common.entity.Visitor;
 import chatroom.common.message.*;
 import chatroom.server.dto.Login;
 import chatroom.server.dto.Register;
-import chatroom.server.model.MessageService;
-import chatroom.server.model.UserService;
-import chatroom.server.model.impl.MessageServiceImpl;
-import chatroom.server.model.impl.UserServiceImpl;
+import chatroom.server.util.MessageService;
+import chatroom.server.service.UserService;
+import chatroom.server.service.impl.MessageServiceImpl;
+import chatroom.server.service.impl.UserServiceImpl;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package chatroom.client.model;
+package chatroom.client.ui;
 
 import chatroom.client.controller.FrontController;
 import chatroom.client.ui.component.impl.LoginFrame;

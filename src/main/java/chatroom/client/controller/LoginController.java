@@ -1,7 +1,7 @@
 package chatroom.client.controller;
 
-import chatroom.client.model.ClientMessageService;
-import chatroom.client.model.UIManager;
+import chatroom.client.util.ClientMessageService;
+import chatroom.client.ui.UIManager;
 import chatroom.client.ui.component.impl.LoginFrame;
 import chatroom.client.ui.component.impl.UserFrame;
 import chatroom.common.message.Message;
