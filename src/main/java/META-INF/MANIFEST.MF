@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: chatroom.client.controller.InitializationController
+Main-Class: chatroom.client.handler.InitializationController
 

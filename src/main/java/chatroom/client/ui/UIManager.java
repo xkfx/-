@@ -1,6 +1,6 @@
 package chatroom.client.ui;
 
-import chatroom.client.controller.FrontController;
+import chatroom.client.handler.FrontController;
 import chatroom.client.ui.component.impl.LoginFrame;
 import chatroom.client.ui.component.impl.MessageFrame;
 import chatroom.client.ui.component.impl.UserFrame;

@@ -1,4 +1,4 @@
-package chatroom.client.controller;
+package chatroom.client.handler;
 
 import chatroom.client.util.ClientMessageService;
 import chatroom.client.ui.UIManager;
