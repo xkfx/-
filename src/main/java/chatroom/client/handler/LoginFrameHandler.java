@@ -1,7 +1,7 @@
 package chatroom.client.handler;
 
+import chatroom.client.ui.UserInterface;
 import chatroom.client.util.ClientMessageService;
-import chatroom.client.ui.UIManager;
 import chatroom.client.ui.component.impl.LoginFrame;
 import chatroom.client.ui.component.impl.UserFrame;
 import chatroom.common.message.Message;
@@ -16,12 +16,12 @@ import java.io.IOException;
 import static chatroom.client.ui.enums.ButtonEnum.*;
 
 /**
- * LoginController：发送验证消息，管理 GUI
+ * LoginFrameHandler：发送验证消息，管理 GUI
  */
-public class LoginController implements ActionListener {
+public class LoginFrameHandler implements ActionListener {
 
     private ClientMessageService clientMessageService;
-    private UIManager uiManager;
+    private UserInterface userInterface;
 
     private void printClientPrompt(final String prompt) {
         System.out.println(prompt);
@@ -43,23 +43,23 @@ public class LoginController implements ActionListener {
     }
 
     private void initMainFrame() {
-        FrontController frontController = new FrontController();
-        uiManager.setFrontController(frontController);
+        UserFrameHandler userFrameHandler = new UserFrameHandler();
+        userInterface.setUserFrameHandler(userFrameHandler);
 
-        UserFrame userFrame = uiManager.getUserFrame();
+        UserFrame userFrame = userInterface.getUserFrame();
         userFrame.setVisible(true);
 
-        BackController backController = new BackController();
-        backController.setUiManager(uiManager);
-        backController.setClientMessageService(clientMessageService);
-        backController.startup(clientMessageService.getSocket());
+        BackEndHandler backEndHandler = new BackEndHandler();
+        backEndHandler.setUserInterface(userInterface);
+        backEndHandler.setClientMessageService(clientMessageService);
+        backEndHandler.startup(clientMessageService.getSocket());
 
-        frontController.setUiManager(uiManager);
-        frontController.setClientMessageService(clientMessageService);
+        userFrameHandler.setUserInterface(userInterface);
+        userFrameHandler.setClientMessageService(clientMessageService);
     }
 
     private void login() {
-        LoginFrame loginFrame = uiManager.getLoginFrame();
+        LoginFrame loginFrame = userInterface.getLoginFrame();
 
         String serverIp = loginFrame.getServerIp();
         int serverPort = loginFrame.getServerPort();
@@ -75,12 +75,12 @@ public class LoginController implements ActionListener {
             loginFrame.dispose();
             initMainFrame();
         } else {
-            uiManager.displayWarning(result.getContent());
+            userInterface.displayWarning(result.getContent());
         }
     }
 
     private void register() {
-        LoginFrame loginFrame = uiManager.getLoginFrame();
+        LoginFrame loginFrame = userInterface.getLoginFrame();
 
         String serverIp = loginFrame.getServerIp();
         int serverPort = loginFrame.getServerPort();
@@ -92,11 +92,11 @@ public class LoginController implements ActionListener {
         Message message = new MsgRegister(username, password);
         Message result = sendFirstMsg(serverIp, serverPort, message);
 
-        uiManager.displayWarning(result.getContent());
+        userInterface.displayWarning(result.getContent());
     }
 
     private void visitorLogin() {
-        LoginFrame loginFrame = uiManager.getLoginFrame();
+        LoginFrame loginFrame = userInterface.getLoginFrame();
         String serverIp = loginFrame.getServerIp();
         int serverPort = loginFrame.getServerPort();
         String nickname = loginFrame.getNickname();
@@ -112,9 +112,9 @@ public class LoginController implements ActionListener {
         }
     }
 
-    public void setUiManager(UIManager manager) {
-        uiManager = manager;
-        LoginFrame loginFrame = uiManager.getLoginFrame();
+    public void setUserInterface(UserInterface manager) {
+        userInterface = manager;
+        LoginFrame loginFrame = userInterface.getLoginFrame();
         loginFrame.addActionListener(this);
     }
 

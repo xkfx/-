@@ -1,7 +1,7 @@
 package chatroom.client.handler;
 
+import chatroom.client.ui.UserInterface;
 import chatroom.client.util.ClientMessageService;
-import chatroom.client.ui.UIManager;
 import chatroom.client.ui.component.impl.UserFrame;
 import chatroom.common.entity.User;
 import chatroom.common.message.Message;
@@ -17,13 +17,13 @@ import static chatroom.common.message.Iconst.*;
 /**
  * 后台控制器，监听来自服务端的消息，转换成模型更新。
  */
-public class BackController {
+public class BackEndHandler {
 
     private ClientMessageService clientMessageService;
-    private UIManager uiManager;
+    private UserInterface userInterface;
 
     private void publicMessage(String str) {
-        UserFrame userFrame = uiManager.getUserFrame();
+        UserFrame userFrame = userInterface.getUserFrame();
         userFrame.displayMessage(str);
     }
 
@@ -31,20 +31,20 @@ public class BackController {
         MsgProfile msgProfile = (MsgProfile) message;
         User user = msgProfile.getUser();
         // 实际上是传递给前端控制器
-        uiManager.setSource(user.getUserId());
+        userInterface.setSource(user.getUserId());
     }
 
     private void initFriendList(Message message) {
         MsgFriends msgFriends = (MsgFriends) message;
-        uiManager.initFriendList(msgFriends.getUser());
+        userInterface.initFriendList(msgFriends.getUser());
     }
 
     public void setClientMessageService(ClientMessageService clientMessageService) {
         this.clientMessageService = clientMessageService;
     }
 
-    public void setUiManager(UIManager manager) {
-        uiManager = manager;
+    public void setUserInterface(UserInterface manager) {
+        userInterface = manager;
     }
 
     public void startup(final Socket socket) {
@@ -69,7 +69,7 @@ public class BackController {
                             }
 
                             if (message.getType() == PERSONAL_MESSAGE) {
-                                UserFrame userFrame = uiManager.getUserFrame();
+                                UserFrame userFrame = userInterface.getUserFrame();
                                 userFrame.displayMessage(message.getContent());
                             }
 

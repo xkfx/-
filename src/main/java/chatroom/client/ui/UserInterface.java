@@ -1,6 +1,6 @@
 package chatroom.client.ui;
 
-import chatroom.client.handler.FrontController;
+import chatroom.client.handler.UserFrameHandler;
 import chatroom.client.ui.component.impl.LoginFrame;
 import chatroom.client.ui.component.impl.MessageFrame;
 import chatroom.client.ui.component.impl.UserFrame;
@@ -12,24 +12,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 管理 GUI ，接受控制器的调用
+ * 对整个用户界面的抽象
  */
-public class UIManager {
+public class UserInterface {
     /**
      * 本机客户端用户的 user_id
-     * 便于 backController 向 frontController 传递用户id
+     * 便于 backController 向 userFrameHandler 传递用户id
      */
     private Long source;
-    private FrontController frontController;
+    private UserFrameHandler userFrameHandler;
     private LoginFrame loginFrame;
     private UserFrame userFrame;
 
     /**
-     * 当 frontController 在 setUIManager 的时候应该同时把自身引用传递给 uiManager
-     * @param frontController
+     * 当 userFrameHandler 在 setUIManager 的时候应该同时把自身引用传递给 uiManager
+     * @param userFrameHandler
      */
-    public void setFrontController(FrontController frontController) {
-        this.frontController = frontController;
+    public void setUserFrameHandler(UserFrameHandler userFrameHandler) {
+        this.userFrameHandler = userFrameHandler;
     }
 
     public void setSource(Long source) {
@@ -59,7 +59,7 @@ public class UIManager {
     public UserFrame getUserFrame() {
         if (userFrame == null) {
             userFrame = new UserFrame();
-            userFrame.addActionListener(frontController);
+            userFrame.addActionListener(userFrameHandler);
         }
         return userFrame;
     }
@@ -90,7 +90,7 @@ public class UIManager {
             messageFrame = targetPanelMap.get(target);
         } else {
             messageFrame = new MessageFrame();
-            messageFrame.addActionListener(frontController);
+            messageFrame.addActionListener(userFrameHandler);
             targetPanelMap.put(target, messageFrame);
         }
         return messageFrame;

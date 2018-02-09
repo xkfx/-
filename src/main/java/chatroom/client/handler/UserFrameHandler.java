@@ -1,7 +1,7 @@
 package chatroom.client.handler;
 
+import chatroom.client.ui.UserInterface;
 import chatroom.client.util.ClientMessageService;
-import chatroom.client.ui.UIManager;
 import chatroom.client.ui.component.impl.UserFrame;
 import chatroom.common.message.Message;
 
@@ -13,14 +13,14 @@ import static chatroom.client.ui.enums.ButtonEnum.SEND;
 import static chatroom.common.message.Iconst.PERSONAL_MESSAGE;
 import static chatroom.common.message.Iconst.PUBLIC_MESSAGE;
 
-public class FrontController implements ActionListener {
+public class UserFrameHandler implements ActionListener {
 
     private ClientMessageService clientMessageService;
-    private UIManager uiManager;
+    private UserInterface userInterface;
 
     private void sendMessage() {
-        final UserFrame userFrame = uiManager.getUserFrame();
-        final Long source = uiManager.getSource();
+        final UserFrame userFrame = userInterface.getUserFrame();
+        final Long source = userInterface.getSource();
         final Long target = userFrame.getTarget();
         final String content = userFrame.getInput();
 
@@ -53,10 +53,10 @@ public class FrontController implements ActionListener {
      * 持有界面管理器的同时，注册相应对象的监听
      * @param manager
      */
-    public void setUiManager(UIManager manager) {
-        uiManager = manager;
-        // 便于 uiManager 动态注册事件监听
-        uiManager.setFrontController(this);
+    public void setUserInterface(UserInterface manager) {
+        userInterface = manager;
+        // 便于 userInterface 动态注册事件监听
+        userInterface.setUserFrameHandler(this);
     }
 
     public void setClientMessageService(ClientMessageService clientMessageService) {
