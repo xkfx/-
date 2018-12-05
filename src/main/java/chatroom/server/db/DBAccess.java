@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBAccess {
 
     private static final String JDBC_DRIVER = "org.gjt.mm.mysql.Driver";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/chat";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/jmessage_swing";
     private static final String USER = "root";
     private static final String PASS = "19971019"; // :p
 
