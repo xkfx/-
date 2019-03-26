@@ -1,9 +1,9 @@
 -- 数据库初始化脚本
 
 -- 创建数据库
--- CREATE DATABASE chat;
+-- CREATE DATABASE jmessage_swing;
 -- 使用数据库
-use chat;
+use jmessage_swing;
 
 -- 创建表
 DROP TABLE IF EXISTS user;
