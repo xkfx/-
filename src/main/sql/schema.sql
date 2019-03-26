@@ -22,13 +22,14 @@ CREATE TABLE friend_relation(
   friend_id BIGINT NOT NULL COMMENT '好友id'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='好友关系表';
 
+-- 实际没用到的表
 DROP TABLE IF EXISTS group_relation;
 CREATE TABLE group_relation(
   user_id BIGINT NOT NULL COMMENT '用户id',
   group_id BIGINT NOT NULL COMMENT '群组id'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='群组关系表';
 
--- 初始化数据
+-- 初始化数据（默认用户）
 INSERT INTO
   user(username, password, nickname, other)
 VALUES
